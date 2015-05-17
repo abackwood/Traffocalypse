@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{88E5BA5D-E65A-8E73-86BB-43054CFC53D8}") = "Traffic Flow Simulator", "Assembly-CSharp.csproj", "{784A54A6-3400-A435-3BA7-C5918F2B83DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{784A54A6-3400-A435-3BA7-C5918F2B83DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784A54A6-3400-A435-3BA7-C5918F2B83DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784A54A6-3400-A435-3BA7-C5918F2B83DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784A54A6-3400-A435-3BA7-C5918F2B83DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+						GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.IndentWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal
