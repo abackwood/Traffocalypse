@@ -10,6 +10,21 @@ public class Road : MonoBehaviour {
 
 	public Lane[] Lanes { get; private set; }
 
+    public float length;
+    public float speed;
+    public float xSpeed;
+    public float ySpeed;
+
+    public float SpeedX
+    {
+        get { return xSpeed;}
+    }
+
+    public float SpeedY
+    {
+        get { return ySpeed; }
+    }
+
 	Lane[] lanesForward, lanesBack;
 	public Lane[] LanesForward {
 		get {
@@ -71,6 +86,15 @@ public class Road : MonoBehaviour {
 		}
 	}
 
+    void CalculateSpeed()
+    {
+        float xDifference = Mathf.Abs(from.transform.position.x - to.transform.position.x);
+        float yDifference = Mathf.Abs(from.transform.position.y - to.transform.position.y);
+        length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
+        xSpeed = (xDifference * speed) / length;
+        ySpeed = (yDifference * speed) / length;
+    }
+
 	// Use this for initialization
 	void Start () {
 		LineRenderer renderer = GetComponent<LineRenderer>();
@@ -80,6 +104,7 @@ public class Road : MonoBehaviour {
 
 		renderer.SetPosition(0,from.transform.position);
 		renderer.SetPosition(1,to.transform.position);
+        CalculateSpeed();
 	}
 	
 	// Update is called once per frame
@@ -88,33 +113,60 @@ public class Road : MonoBehaviour {
 	}
 }
 
-public struct Lane {
+public struct Lane 
+{
 	Road road;
-	public Road Road {
+	public Road Road
+    {
 		get { return road; }
 	}
 
 	int id;
-	public int ID {
+	public int ID 
+    {
 		get { return id; }
 	}
 
 	Connection from;
-	public Connection From {
+	public Connection From 
+    {
 		get { return from; }
 	}
 
 	Connection to;
-	public Connection To {
+	public Connection To 
+    {
 		get { return to; }
 	}
 
+    public float Length
+    {
+        get { return road.length; }
+    }
+
+    public float Speed
+    {
+        get { return road.speed; }
+    }
+
+    public float SpeedX
+    {
+        get { return road.SpeedX; }
+    }
+
+    public float SpeedY
+    {
+        get { return road.SpeedY; }
+    }
+
 	List<Car> carsOnLane;
-	public Car[] CarsOnLane {
+	public Car[] CarsOnLane 
+    {
 		get { return carsOnLane.ToArray(); }
 	}
 
-	public Lane(Road road, int id, Connection from, Connection to) {
+	public Lane(Road road, int id, Connection from, Connection to) 
+    {
 		this.road = road;
 		this.id = id;
 		this.from = from;
@@ -122,6 +174,19 @@ public struct Lane {
 
 		carsOnLane = new List<Car>();
 	}
+
+    public void Subscribe(Car car)
+    {
+        int count = carsOnLane.Count - 1;
+        if (count > -1)
+            car.nextCar = carsOnLane[count];
+        carsOnLane.Add(car);
+    }
+
+    public void Unsubcribe(Car car)
+    {
+        //Jag är inte galen, jag är ett flygplan!
+    }
 
 	public override string ToString ()
 	{
