@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{88E5BA5D-E65A-8E73-86BB-43054CFC53D8}") = "Traffic Flow Simulator", "Assembly-CSharp.csproj", "{784A54A6-3400-A435-3BA7-C5918F2B83DD}"
+Project("{88E5BA5D-E65A-8E73-86BB-43054CFC53D8}") = "Traffic Flow Simulator", "Assembly-CSharp-vs.csproj", "{784A54A6-3400-A435-3BA7-C5918F2B83DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,7 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-						GlobalSection(MonoDevelopProperties) = preSolution
+								GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
