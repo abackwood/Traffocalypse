@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Car.cs" />
+     <Compile Include="Assets\CarAI.cs" />
      <Compile Include="Assets\Connection.cs" />
      <Compile Include="Assets\Intersection.cs" />
      <Compile Include="Assets\Road.cs" />

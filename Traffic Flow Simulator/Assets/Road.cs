@@ -10,6 +10,21 @@ public class Road : MonoBehaviour {
 
 	public Lane[] Lanes { get; private set; }
 
+	public float length;
+	public float speed;
+	public float xSpeed;
+	public float ySpeed;
+	
+	public float SpeedX
+	{
+		get { return xSpeed;}
+	}
+	
+	public float SpeedY
+	{
+		get { return ySpeed; }
+	}
+
 	Lane[] lanesForward, lanesBack;
 	public Lane[] LanesForward {
 		get {
@@ -71,6 +86,15 @@ public class Road : MonoBehaviour {
 		}
 	}
 
+	void CalculateSpeed()
+	{
+		float xDifference = Mathf.Abs(from.transform.position.x - to.transform.position.x);
+		float yDifference = Mathf.Abs(from.transform.position.y - to.transform.position.y);
+		length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
+		xSpeed = (xDifference * speed) / length;
+		ySpeed = (yDifference * speed) / length;
+	}
+
 	// Use this for initialization
 	void Start () {
 		LineRenderer renderer = GetComponent<LineRenderer>();
@@ -109,6 +133,26 @@ public struct Lane {
 		get { return to; }
 	}
 
+	public float Length
+	{
+		get { return road.length; }
+	}
+	
+	public float Speed
+	{
+		get { return road.speed; }
+	}
+	
+	public float SpeedX
+	{
+		get { return road.SpeedX; }
+	}
+	
+	public float SpeedY
+	{
+		get { return road.SpeedY; }
+	}
+
 	List<Car> carsOnLane;
 	public Car[] CarsOnLane {
 		get { return carsOnLane.ToArray(); }
@@ -121,6 +165,19 @@ public struct Lane {
 		this.to = to;
 
 		carsOnLane = new List<Car>();
+	}
+
+	public void Subscribe(Car car)
+	{
+		int count = carsOnLane.Count - 1;
+		if (count > -1)
+			car.nextCar = carsOnLane[count];
+		carsOnLane.Add(car);
+	}
+	
+	public void Unsubcribe(Car car)
+	{
+		//Jag är inte galen, jag är ett flygplan!
 	}
 
 	public override string ToString ()
