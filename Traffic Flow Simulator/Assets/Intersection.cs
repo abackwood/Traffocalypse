@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -60,5 +61,30 @@ public struct PossibleTurn {
 	public PossibleTurn(Lane laneIn, Lane[] lanesOut) {
 		this.laneIn = laneIn;
 		this.lanesOut = lanesOut;
+	}
+}
+
+public struct ExplicitTurn {
+	PossibleTurn turn;
+	int index;
+
+	public Intersection Intersection {
+		get { return (Intersection)LaneIn.To; }
+	}
+	public Lane LaneIn {
+		get { return turn.LaneIn; }
+	}
+	public Lane LaneOut {
+		get { return turn.LanesOut[index]; }
+	}
+
+	public ExplicitTurn(PossibleTurn turn, int index) {
+		this.turn = turn;
+		this.index = index;
+	}
+
+	public override string ToString ()
+	{
+		return "(" + LaneIn + " > " + LaneOut + ")";
 	}
 }

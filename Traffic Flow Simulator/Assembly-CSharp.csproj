@@ -51,6 +51,7 @@
      <Compile Include="Assets\Connection.cs" />
      <Compile Include="Assets\Intersection.cs" />
      <Compile Include="Assets\Road.cs" />
+     <Compile Include="Assets\Route.cs" />
      <Compile Include="Assets\SourceSink.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
