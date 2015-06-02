@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent (typeof (LineRenderer))]
 public class Road : MonoBehaviour {
 	public Connection from, to;
 	public bool oneWay;
@@ -104,6 +103,9 @@ public class Road : MonoBehaviour {
 
 		renderer.SetPosition(0,from.transform.position);
 		renderer.SetPosition(1,to.transform.position);
+	}
+	void InitLanes() {
+
 	}
 	
 	// Update is called once per frame
