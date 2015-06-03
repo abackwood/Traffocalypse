@@ -25,7 +25,7 @@ public class Road : MonoBehaviour {
 	{
 		get { return ySpeed; }
 	}
-
+    
 	Lane[] lanesForward, lanesBack;
 	public Lane[] LanesForward {
 		get {
@@ -43,7 +43,7 @@ public class Road : MonoBehaviour {
 			return lanesBack;
 		}
 	}
-
+    
 	public Lane[] InLanes(Connection c) {
 		if(from == c) return LanesBack;
 		else if(to == c) return LanesForward;
@@ -56,6 +56,7 @@ public class Road : MonoBehaviour {
 		else return null;
 	}
 
+    
 	void InitRoad() {
 		Lanes = new Lane[lanes];
 		if(oneWay) {
@@ -75,18 +76,26 @@ public class Road : MonoBehaviour {
 			
 			int i = 0;
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
-				Lane lane = new Lane(this,i,from,to);
+				//Lane lane = new Lane(this,i,from,to);
+                Debug.Log("TEEEASFAVADF");
+                Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity);
+                Lane lane = leftLane.GetComponent<Lane>();
+                lane.Initiate(this, i, from, to);
 				Lanes[i] = lane;
 				LanesForward[j] = lane;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
-				Lane lane = new Lane(this,i,to,from);
+				//Lane lane = new Lane(this,i,to,from);
+                Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity);
+                Lane lane = rightLane.GetComponent<Lane>();
+                lane.Initiate(this, i, to, from);
 				Lanes[i] = lane;
 				LanesBack[j] = lane;
 			}
 		}
 
 	}
+
 	void InitLanes() {
 		
 	}
@@ -101,40 +110,15 @@ public class Road : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
-        Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity);
-        Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity);
-
-        float xDifference = from.transform.position.x - to.transform.position.x;
-        float yDifference = from.transform.position.y - to.transform.position.y;
-        length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
-        float xNorm = xDifference / length*5;
-        float yNorm = yDifference / length*5;
-
-        Vector3 fromPos = from.transform.position;
-        fromPos.y += xNorm;
-        fromPos.x -= yNorm;
-        Vector3 toPos = to.transform.position;
-        toPos.y += xNorm;
-        toPos.x -= yNorm;
-
-		LineRenderer rendererRight = rightLane.GetComponent<LineRenderer>();
-        LineRenderer rendererLeft = leftLane.GetComponent<LineRenderer>();
-
-		float width = 1f;
-		rendererRight.SetWidth(width,width);
-        rendererLeft.SetWidth(width, width);
-
-		rendererRight.SetPosition(0,fromPos);
-		rendererRight.SetPosition(1,toPos);
-
-        fromPos.y -= xNorm;
-        fromPos.x += yNorm;
-        toPos.y -= xNorm;
-        toPos.x += yNorm;
-
-        rendererLeft.SetPosition(0, fromPos);
-        rendererLeft.SetPosition(1, toPos);
+	void Start () 
+    {
+        //InitRoad();
+        //Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity);
+        //Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity);
+        //Lane rightLaneScript = rightLane.GetComponent<Lane>();
+        //rightLaneScript.Initiate(this, 0, to, from);
+        //Lane leftLaneScript = leftLane.GetComponent<Lane>();
+        //leftLaneScript.Initiate(this, 1, from, to);
 	}
 	
 	// Update is called once per frame

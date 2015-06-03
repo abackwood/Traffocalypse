@@ -56,7 +56,38 @@ public class Lane : MonoBehaviour {
 		
 		carsOnLane = new List<Car>();
 	}
-	
+
+    public void Initiate(Road road, int id, Connection from, Connection to)
+    {
+        this.road = road;
+        this.id = id;
+        this.from = from;
+        this.to = to;
+
+        carsOnLane = new List<Car>();
+
+        float xDifference = from.transform.position.x - to.transform.position.x;
+        float yDifference = from.transform.position.y - to.transform.position.y;
+        float length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
+        float xNorm = xDifference / length * 5;
+        float yNorm = yDifference / length * 5;
+
+        Vector3 fromPos = from.transform.position;
+        fromPos.y += xNorm;
+        fromPos.x -= yNorm;
+        Vector3 toPos = to.transform.position;
+        toPos.y += xNorm;
+        toPos.x -= yNorm;
+
+        LineRenderer renderer = GetComponent<LineRenderer>();
+
+        float width = 1f;
+        renderer.SetWidth(width, width);
+
+        renderer.SetPosition(0, fromPos);
+        renderer.SetPosition(1, toPos);
+    }
+
 	public void Subscribe(Car car)
 	{
 		int count = carsOnLane.Count - 1;
@@ -70,7 +101,8 @@ public class Lane : MonoBehaviour {
 		//Jag är inte galen, jag är ett flygplan!
 	}
 
-	void Start() {
+	void Start() 
+    {
 
 	}
 

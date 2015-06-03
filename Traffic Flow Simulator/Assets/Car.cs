@@ -66,32 +66,38 @@ public class Car : MonoBehaviour {
 	//If this route ends in the destination this is the new route
 	//Otherwise all possible next turns are generated and the best lane chosen for new routes.
 	//These new routes are pushed at the end of the queue.
-	public void RecomputeRoute() {
-		Connection nextNode = currentLane.To;
-		Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
+    public void RecomputeRoute()
+    {
+        Connection nextNode = currentLane.To;
+        Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
 
-		while(routes.Count > 0) {
-			Route route = routes.Dequeue ();
-			Debug.Log (route);
-			if (route.EndPoint == destination) {
-				this.route = route;
-				route_index = 0;
-				return;
-			}
-			else {
-				ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
-				if(possibleNextTurns == null) {
-					continue;
-				}
-				foreach(PossibleTurn turn in possibleNextTurns) {
-					ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-					Route new_route = new Route(route,bestTurn,ai);
-					routes.Enqueue(new_route);
-				}
-			}
-		}
-		route_index = 0;
-	}
+        while (routes.Count > 0)
+        {
+            Route route = routes.Dequeue();
+            Debug.Log(route);
+            if (route.EndPoint == destination)
+            {
+                this.route = route;
+                route_index = 0;
+                return;
+            }
+            else
+            {
+                ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
+                if (possibleNextTurns == null)
+                {
+                    continue;
+                }
+                foreach (PossibleTurn turn in possibleNextTurns)
+                {
+                    ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
+                    Route new_route = new Route(route, bestTurn, ai);
+                    routes.Enqueue(new_route);
+                }
+            }
+        }
+        route_index = 0;
+    }
 
 	ICollection<Route> GenerateRoutesFromNextNode(Connection nextNode) {
 		if(nextNode.GetType().Equals (typeof(SourceSink))) {
