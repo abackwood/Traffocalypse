@@ -67,13 +67,7 @@ public class Road : MonoBehaviour {
 			lanesBack = new Lane[0];
 			
 			for(int i = 0 ; i < lanes ; i++) {
-				Lane lane = GameObject.Instantiate(laneTemplate);
-				lane.transform.SetParent(transform);
-				lane.road = this;
-				lane.id = i;
-				lane.from = from;
-				lane.to = to;
-
+				Lane lane = SetupLane(i,from,to);
 				SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
@@ -87,32 +81,31 @@ public class Road : MonoBehaviour {
 			
 			int i = 0;
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
-				Lane lane = GameObject.Instantiate(laneTemplate);
-				lane.transform.SetParent(transform);
-				lane.road = this;
-				lane.id = i;
-				lane.from = from;
-				lane.to = to;
-
+				Lane lane = SetupLane(i,from,to);
 				SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
 				LanesForward[j] = lane;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
-				Lane lane = GameObject.Instantiate(laneTemplate);
-				lane.transform.SetParent(transform);
-				lane.road = this;
-				lane.id = i;
-				lane.from = to;
-				lane.to = from;
-
+				Lane lane = SetupLane(i,to,from);
 				SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
 				LanesBack[j] = lane;
 			}
 		}
+	}
+	Lane SetupLane(int id, Connection from, Connection to) {
+		Lane lane = GameObject.Instantiate(laneTemplate);
+		lane.transform.SetParent(transform);
+
+		lane.road = this;
+		lane.id = id;
+		lane.from = from;
+		lane.to = to;
+
+		return lane;
 	}
 	void SetupLineRenderer(Lane lane, int i, float minOffset) {
 		Vector3 direction = to.transform.position - from.transform.position;
@@ -121,6 +114,10 @@ public class Road : MonoBehaviour {
 		LineRenderer renderer = lane.GetComponent<LineRenderer>();
 		Vector3 offset_from = from.transform.position + (i * laneSpacing - minOffset) * ortho;
 		Vector3 offset_to = to.transform.position + (i * laneSpacing - minOffset) * ortho;
+
+		lane.startPoint = offset_from;
+		lane.endPoint = offset_to;
+
 		renderer.SetPosition(0,offset_from);
 		renderer.SetPosition(1,offset_to);
 	}

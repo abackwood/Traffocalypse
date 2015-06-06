@@ -47,7 +47,7 @@ public class Lane : MonoBehaviour {
 	}
 
 	void Start() {
-
+		carsOnLane = new List<Car>();
 	}
 
 	void Update() {
@@ -56,6 +56,6 @@ public class Lane : MonoBehaviour {
 	
 	public override string ToString ()
 	{
-		return road.name + "-" + id + "(" + from.name + "-" + to.name + ")";
+		return road.name + "-" + id;
 	}
 }

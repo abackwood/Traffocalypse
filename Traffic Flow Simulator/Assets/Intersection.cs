@@ -93,7 +93,7 @@ public struct PossibleTurn {
 		// Get delta and check if the lines are parallel
 		float delta = A1*B2 - A2*B1;
 		if(delta == 0) {
-			throw new System.Exception("Lines are parallel");
+			return (in_end - out_start) / 2;
 		}
 		
 		// now return the Vector2 intersection point
@@ -128,6 +128,6 @@ public struct ExplicitTurn {
 
 	public override string ToString ()
 	{
-		return "(" + LaneIn + " > " + LaneOut + ")";
+		return "(" + LaneIn + " -(" + TurnPoint + ")->" + LaneOut + ")";
 	}
 }
