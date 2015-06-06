@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Car : MonoBehaviour {
+	public delegate void CarEventHandler(Car car);
+
+	public event CarEventHandler Spawned, ReachedDestination;
+
 	public Lane currentLane;
 	public float position;
 	public SourceSink source, destination;
@@ -16,11 +20,12 @@ public class Car : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Lane[] possibleLanes = source.road.OutLanes(source);	//All lanes going out from the source
-		currentLane = possibleLanes[0];		//Arbitrary choice of lane, might want to choose randomly or with a heuristic at some point
-
 		ai = new SimpleCarAI();
 		route_index = -1;
+
+		if(Spawned != null) {
+			Spawned(this);
+		}
 	}
 	
 	// Update is called once per frame
@@ -29,6 +34,10 @@ public class Car : MonoBehaviour {
 		if(route_index == -1) {
 			RecomputeRoute ();
 			Debug.Log ("Final Route: " + route);
+		}
+
+		if(IsAtDestination() && ReachedDestination != null) {
+			ReachedDestination(this);
 		}
 
 		//Driving
@@ -50,6 +59,10 @@ public class Car : MonoBehaviour {
 		 * 			keep safe distance, drive at desired speed, etc.
 		 */
 				
+	}
+
+	bool IsAtDestination() {
+		return Vector3.Distance(transform.position, destination.transform.position) < 0.1f;
 	}
 
 	void StartNewLane()

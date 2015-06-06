@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class Lane : MonoBehaviour {
 	public Road road;
 	public int id;
-	public Connection from;
-	public Connection to;
+	public Connection from, to;
+	public Vector3 startPoint, endPoint;
 
 	public float Length
 	{
@@ -31,15 +31,6 @@ public class Lane : MonoBehaviour {
 	List<Car> carsOnLane;
 	public Car[] CarsOnLane {
 		get { return carsOnLane.ToArray(); }
-	}
-	
-	public Lane(Road road, int id, Connection from, Connection to) {
-		this.road = road;
-		this.id = id;
-		this.from = from;
-		this.to = to;
-		
-		carsOnLane = new List<Car>();
 	}
 	
 	public void Subscribe(Car car)

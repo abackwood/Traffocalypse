@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public interface CarAI {
-	float EvaluateRoad(Road road);
+	float EvaluateRoad(Road road);	//NEVER USED
 	float EvaluateLane(Lane lane);
 }
 

@@ -58,9 +58,49 @@ public struct PossibleTurn {
 		get { return lanesOut; }
 	}
 
+	Vector3[] laneIntersections;
+	public Vector3[] LaneIntersections {
+		get { return laneIntersections; }
+	}
+
 	public PossibleTurn(Lane laneIn, Lane[] lanesOut) {
 		this.laneIn = laneIn;
 		this.lanesOut = lanesOut;
+
+		laneIntersections = new Vector3[lanesOut.Length];
+		for(int i = 0 ; i < lanesOut.Length ; i++) {
+			Vector2 intersection = LaneIntersectionPoint(laneIn, lanesOut[i]);
+			laneIntersections[i] = new Vector3(intersection.x, intersection.y, 0);
+		}
+	}
+
+	Vector2 LaneIntersectionPoint(Lane inLane, Lane outLane) {
+		Vector2 in_start = inLane.startPoint;
+		Vector2 in_end = inLane.endPoint;
+		Vector2 out_start = outLane.startPoint;
+		Vector2 out_end = outLane.endPoint;
+
+		// Get A,B,C of first line
+		float A1 = in_end.y-in_start.y;
+		float B1 = in_start.x-in_end.x;
+		float C1 = A1*in_start.x+B1*in_start.y;
+		
+		// Get A,B,C of second line
+		float A2 = out_end.y-out_start.y;
+		float B2 = out_start.x-out_end.x;
+		float C2 = A2*out_start.x+B2*out_start.y;
+		
+		// Get delta and check if the lines are parallel
+		float delta = A1*B2 - A2*B1;
+		if(delta == 0) {
+			throw new System.Exception("Lines are parallel");
+		}
+		
+		// now return the Vector2 intersection point
+		return new Vector2(
+			(B2*C1 - B1*C2) / delta,
+			(A1*C2 - A2*C1) / delta
+			);
 	}
 }
 
@@ -76,6 +116,9 @@ public struct ExplicitTurn {
 	}
 	public Lane LaneOut {
 		get { return turn.LanesOut[index]; }
+	}
+	public Vector3 TurnPoint {
+		get { return turn.LaneIntersections[index]; }
 	}
 
 	public ExplicitTurn(PossibleTurn turn, int index) {
