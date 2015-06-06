@@ -6,6 +6,8 @@ public class Road : MonoBehaviour {
 	public Connection from, to;
 	public bool oneWay;
 	public int lanes;
+	public Lane laneTemplate;
+	public float laneSpacing;
 
 	public Lane[] Lanes { get; private set; }
 
@@ -55,13 +57,25 @@ public class Road : MonoBehaviour {
 	}
 
 	void InitRoad() {
+		transform.position = (from.transform.position + to.transform.position) / 2;
+
+		float minOffset = (laneSpacing * (lanes - 1)) / 2;	//Half of the total offset between lanes
+
 		Lanes = new Lane[lanes];
 		if(oneWay) {
 			lanesForward = new Lane[lanes];
 			lanesBack = new Lane[0];
 			
 			for(int i = 0 ; i < lanes ; i++) {
-				Lane lane = new Lane(this,i,from,to);
+				Lane lane = GameObject.Instantiate(laneTemplate);
+				lane.transform.SetParent(transform);
+				lane.road = this;
+				lane.id = i;
+				lane.from = from;
+				lane.to = to;
+
+				SetupLineRenderer(lane,i,minOffset);
+
 				Lanes[i] = lane;
 				lanesForward[i] = lane;
 			}
@@ -73,20 +87,42 @@ public class Road : MonoBehaviour {
 			
 			int i = 0;
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
-				Lane lane = new Lane(this,i,from,to);
+				Lane lane = GameObject.Instantiate(laneTemplate);
+				lane.transform.SetParent(transform);
+				lane.road = this;
+				lane.id = i;
+				lane.from = from;
+				lane.to = to;
+
+				SetupLineRenderer(lane,i,minOffset);
+
 				Lanes[i] = lane;
 				LanesForward[j] = lane;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
-				Lane lane = new Lane(this,i,to,from);
+				Lane lane = GameObject.Instantiate(laneTemplate);
+				lane.transform.SetParent(transform);
+				lane.road = this;
+				lane.id = i;
+				lane.from = to;
+				lane.to = from;
+
+				SetupLineRenderer(lane,i,minOffset);
+
 				Lanes[i] = lane;
 				LanesBack[j] = lane;
 			}
 		}
-
 	}
-	void InitLanes() {
-		
+	void SetupLineRenderer(Lane lane, int i, float minOffset) {
+		Vector3 direction = to.transform.position - from.transform.position;
+		Vector3 ortho = new Vector3(-direction.y, direction.x, 0).normalized;
+
+		LineRenderer renderer = lane.GetComponent<LineRenderer>();
+		Vector3 offset_from = from.transform.position + (i * laneSpacing - minOffset) * ortho;
+		Vector3 offset_to = to.transform.position + (i * laneSpacing - minOffset) * ortho;
+		renderer.SetPosition(0,offset_from);
+		renderer.SetPosition(1,offset_to);
 	}
 
 	void CalculateSpeed()
@@ -100,13 +136,7 @@ public class Road : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		LineRenderer renderer = GetComponent<LineRenderer>();
 
-		float width = 1f;
-		renderer.SetWidth(width,width);
-
-		renderer.SetPosition(0,from.transform.position);
-		renderer.SetPosition(1,to.transform.position);
 	}
 	
 	// Update is called once per frame

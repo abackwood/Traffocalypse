@@ -14,7 +14,7 @@ public struct Route {
 	}
 
 	public Connection EndPoint {
-		get { return Last.LaneOut.To; }
+		get { return Last.LaneOut.to; }
 	}
 
 	//Calculates all possible turns that could be made from this route
@@ -52,7 +52,7 @@ public struct Route {
 		intersectionsCrossed.Add (turn.Intersection);
 
 		route = new ExplicitTurn[]{turn};
-		routeValue = ai.EvaluateRoad(turn.LaneIn.Road);
+		routeValue = ai.EvaluateRoad(turn.LaneIn.road);
 	}
 
 	//Initializes a route based on a previous route, with an added explicit turn
@@ -67,7 +67,7 @@ public struct Route {
 		}
 		route[route.Length - 1] = turn;
 
-		Road newRoad = oldRoute.Last.LaneOut.Road;
+		Road newRoad = oldRoute.Last.LaneOut.road;
 		routeValue = oldRoute.routeValue + ai.EvaluateRoad(newRoad);
 	}
 

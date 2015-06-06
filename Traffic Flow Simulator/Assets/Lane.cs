@@ -3,26 +3,11 @@ using System.Collections.Generic;
 
 [RequireComponent (typeof (LineRenderer))]
 public class Lane : MonoBehaviour {
-	Road road;
-	public Road Road {
-		get { return road; }
-	}
-	
-	int id;
-	public int ID {
-		get { return id; }
-	}
-	
-	Connection from;
-	public Connection From {
-		get { return from; }
-	}
-	
-	Connection to;
-	public Connection To {
-		get { return to; }
-	}
-	
+	public Road road;
+	public int id;
+	public Connection from;
+	public Connection to;
+
 	public float Length
 	{
 		get { return road.length; }
@@ -80,6 +65,6 @@ public class Lane : MonoBehaviour {
 	
 	public override string ToString ()
 	{
-		return Road.name + "-" + id + "(" + from.name + "-" + to.name + ")";
+		return road.name + "-" + id + "(" + from.name + "-" + to.name + ")";
 	}
 }
