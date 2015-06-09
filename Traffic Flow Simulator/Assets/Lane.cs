@@ -91,8 +91,8 @@ public class Lane : MonoBehaviour {
         float xDifference = from.transform.position.x - to.transform.position.x;
         float yDifference = from.transform.position.y - to.transform.position.y;
         float length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
-        float xNorm = xDifference / length * 5;
-        float yNorm = yDifference / length * 5;
+        float xNorm = xDifference / length * 2.5f;
+        float yNorm = yDifference / length * 2.5f;
 
         fromPos = from.transform.position;
         fromPos.y += xNorm;
@@ -111,12 +111,17 @@ public class Lane : MonoBehaviour {
 
         CalculateSpeed();
 
-        Transform currentCar = Instantiate(car, from.transform.position, Quaternion.identity) as Transform;
-        Car carScript = currentCar.GetComponent<Car>();
-        carScript.source = from as SourceSink;
-        carScript.destination = to as SourceSink;
-        currentCar.position = fromPos;
-        currentCar.localScale = new Vector3(25, 25, 0);
+        SourceSink sourceSink = from as SourceSink;
+        if(sourceSink != null && sourceSink.source)
+        {
+            Transform currentCar = Instantiate(car, from.transform.position, Quaternion.identity) as Transform;
+            Car carScript = currentCar.GetComponent<Car>();
+            carScript.source = from as SourceSink;
+            carScript.destination = to as SourceSink;
+            currentCar.position = fromPos;
+            currentCar.localScale = new Vector3(25, 25, 0);
+        }
+
     }
 
     void CalculateSpeed()
