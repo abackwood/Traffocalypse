@@ -61,14 +61,14 @@ public class Road : MonoBehaviour {
 
 		float minOffset = (laneSpacing * (lanes - 1)) / 2;	//Half of the total offset between lanes
 
-		Lanes = new Lane[lanes];
+		Lanes = new Lane[lanes];	//TODO Figure out where line renderer and start/end of lanes should be set
 		if(oneWay) {
 			lanesForward = new Lane[lanes];
 			lanesBack = new Lane[0];
 			
 			for(int i = 0 ; i < lanes ; i++) {
 				Lane lane = SetupLane(i,from,to);
-				SetupLineRenderer(lane,i,minOffset);
+				//SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
 				lanesForward[i] = lane;
@@ -82,14 +82,14 @@ public class Road : MonoBehaviour {
 			int i = 0;
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
 				Lane lane = SetupLane(i,from,to);
-				SetupLineRenderer(lane,i,minOffset);
+				//SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
 				LanesForward[j] = lane;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
 				Lane lane = SetupLane(i,to,from);
-				SetupLineRenderer(lane,i,minOffset);
+				//SetupLineRenderer(lane,i,minOffset);
 
 				Lanes[i] = lane;
 				LanesBack[j] = lane;
