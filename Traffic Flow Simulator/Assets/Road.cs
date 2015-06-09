@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Road : MonoBehaviour {
+    public Transform car;
+
 	public Connection from, to;
 	public bool oneWay;
 	public int lanes;
@@ -78,41 +80,35 @@ public class Road : MonoBehaviour {
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
 				//Lane lane = new Lane(this,i,from,to);
                 Debug.Log("TEEEASFAVADF");
-                Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity);
-                Lane lane = leftLane.GetComponent<Lane>();
-                lane.Initiate(this, i, from, to);
-				Lanes[i] = lane;
-				LanesForward[j] = lane;
+                Transform lane = Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity) as Transform;
+                Lane laneScript = lane.GetComponent<Lane>();
+                laneScript.car = car;
+                laneScript.Initiate(this, i, from, to);
+        
+				Lanes[i] = laneScript;
+				LanesForward[j] = laneScript;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
 				//Lane lane = new Lane(this,i,to,from);
-                Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity);
-                Lane lane = rightLane.GetComponent<Lane>();
-                lane.Initiate(this, i, to, from);
-				Lanes[i] = lane;
-				LanesBack[j] = lane;
+                Debug.Log("test");
+                Transform lane = Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity) as Transform;
+                Lane laneScript = lane.GetComponent<Lane>();
+                laneScript.car = car;
+                laneScript.Initiate(this, i, to, from);
+				Lanes[i] = laneScript;
+				LanesBack[j] = laneScript;
 			}
 		}
-
 	}
 
 	void InitLanes() {
 		
 	}
 
-	void CalculateSpeed()
-	{
-		float xDifference = Mathf.Abs(from.transform.position.x - to.transform.position.x);
-		float yDifference = Mathf.Abs(from.transform.position.y - to.transform.position.y);
-		length = Mathf.Sqrt((xDifference * xDifference) + (yDifference * yDifference));
-		xSpeed = (xDifference * speed) / length;
-		ySpeed = (yDifference * speed) / length;
-	}
-
 	// Use this for initialization
 	void Start () 
     {
-        //InitRoad();
+        InitRoad();
         //Instantiate(rightLane, new Vector3(0, 0, 0), Quaternion.identity);
         //Instantiate(leftLane, new Vector3(0, 0, 0), Quaternion.identity);
         //Lane rightLaneScript = rightLane.GetComponent<Lane>();

@@ -40,6 +40,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12fb232c24488c94fafa106d10a70cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  car: {fileID: 0}
+  length: 0
+  speed: 0
+  xSpeed: 0
+  ySpeed: 0
 --- !u!120 &12000872
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -65,8 +70,8 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -8.35533237, y: 20.5988674, z: 0}
-  - {x: 25.164732, y: -17.5331955, z: 0}
+  - {x: 32.675396, y: -10.9309311, z: 0}
+  - {x: -.844667196, y: 27.2011318, z: 0}
   m_Parameters:
     startWidth: 1
     endWidth: 1

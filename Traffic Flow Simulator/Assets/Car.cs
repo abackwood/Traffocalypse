@@ -26,16 +26,18 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Some sort of pathfinding
-		if(route_index == -1) {
-			RecomputeRoute ();
-			Debug.Log ("Final Route: " + route);
-		}
+        //if(route_index == -1) {
+        //    RecomputeRoute ();
+        //    Debug.Log ("Final Route: " + route);
+        //}
 
 		//Driving
 		//	Collision prevention
 		//	Set speed
 		//	Move down lane
 		//	Turn at intersections
+
+        Move();
 	}
 
 	void StartNewLane()
@@ -44,6 +46,7 @@ public class Car : MonoBehaviour {
 	
 	void Move()
 	{
+        
 		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.Speed)
 		{
 			return;
@@ -53,11 +56,11 @@ public class Car : MonoBehaviour {
 		
 		if (distanceOnLane > currentLane.Length)
 		{
-			transform.position = new Vector3(currentLane.To.transform.position.x, currentLane.To.transform.position.y, 0);
+			transform.position = new Vector3(currentLane.ToPosition.x, currentLane.ToPosition.y, 0);
 			distanceOnLane -= currentLane.Speed;
 			return;
 		}
-		
+
 		transform.Translate(new Vector3(currentLane.SpeedX, currentLane.SpeedY, 0));
 	}
 
@@ -68,35 +71,35 @@ public class Car : MonoBehaviour {
 	//These new routes are pushed at the end of the queue.
     public void RecomputeRoute()
     {
-        Connection nextNode = currentLane.To;
-        Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
+        //Connection nextNode = currentLane.To;
+        //Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
 
-        while (routes.Count > 0)
-        {
-            Route route = routes.Dequeue();
-            Debug.Log(route);
-            if (route.EndPoint == destination)
-            {
-                this.route = route;
-                route_index = 0;
-                return;
-            }
-            else
-            {
-                ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
-                if (possibleNextTurns == null)
-                {
-                    continue;
-                }
-                foreach (PossibleTurn turn in possibleNextTurns)
-                {
-                    ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-                    Route new_route = new Route(route, bestTurn, ai);
-                    routes.Enqueue(new_route);
-                }
-            }
-        }
-        route_index = 0;
+        //while (routes.Count > 0)
+        //{
+        //    Route route = routes.Dequeue();
+        //    Debug.Log(route);
+        //    if (route.EndPoint == destination)
+        //    {
+        //        this.route = route;
+        //        route_index = 0;
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
+        //        if (possibleNextTurns == null)
+        //        {
+        //            continue;
+        //        }
+        //        foreach (PossibleTurn turn in possibleNextTurns)
+        //        {
+        //            ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
+        //            Route new_route = new Route(route, bestTurn, ai);
+        //            routes.Enqueue(new_route);
+        //        }
+        //    }
+        //}
+        //route_index = 0;
     }
 
 	ICollection<Route> GenerateRoutesFromNextNode(Connection nextNode) {

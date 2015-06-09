@@ -180,11 +180,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 443968, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.5999999
+      value: 68
       objectReference: {fileID: 0}
     - target: {fileID: 443968, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.8999996
+      value: 26.7000008
       objectReference: {fileID: 0}
     - target: {fileID: 443968, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -210,6 +210,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11485220, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
+      propertyPath: road
+      value: 
+      objectReference: {fileID: 1751615215}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
   m_IsPrefabParent: 0
@@ -266,6 +270,10 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 1719397866}
+    - target: {fileID: 11436410, guid: 64abaa267b23a0747930dc5d40669af0, type: 2}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 409722, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64abaa267b23a0747930dc5d40669af0, type: 2}
   m_IsPrefabParent: 0
@@ -306,8 +314,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 430144, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11442860, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
+      propertyPath: road
+      value: 
+      objectReference: {fileID: 1751615215}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
   m_IsPrefabParent: 0
@@ -317,3 +329,9 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 78320720}
   m_Script: {fileID: 11500000, guid: a9e4a93a054583a4b9908afc50183f57, type: 3}
+--- !u!114 &1751615215 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11436410, guid: 64abaa267b23a0747930dc5d40669af0,
+    type: 2}
+  m_PrefabInternal: {fileID: 851775087}
+  m_Script: {fileID: 11500000, guid: d07968c3923a12b41a57e33e025975d0, type: 3}
