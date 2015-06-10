@@ -69,7 +69,7 @@ public struct ExplicitTurn {
 	int index;
 
 	public Intersection Intersection {
-		get { return (Intersection)LaneIn.to; }
+		get { return (Intersection)LaneIn.To; }
 	}
 	public Lane LaneIn {
 		get { return turn.LaneIn; }

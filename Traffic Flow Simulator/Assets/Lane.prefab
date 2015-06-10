@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 454454}
   - 120: {fileID: 12000872}
-  - 114: {fileID: 11440692}
   m_Layer: 0
   m_Name: Lane
   m_TagString: Untagged
@@ -29,21 +28,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11440692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12fb232c24488c94fafa106d10a70cfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  road: {fileID: 0}
-  id: 0
-  from: {fileID: 0}
-  to: {fileID: 0}
 --- !u!120 &12000872
 LineRenderer:
   m_ObjectHideFlags: 1

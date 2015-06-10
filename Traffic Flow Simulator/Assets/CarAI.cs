@@ -11,6 +11,6 @@ public class SimpleCarAI : CarAI {
 	}
 
 	public float EvaluateLane(Lane lane) {
-		return lane.id;
+		return lane.ID;
 	}
 }

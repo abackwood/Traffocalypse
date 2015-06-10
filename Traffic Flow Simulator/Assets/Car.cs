@@ -36,20 +36,6 @@ public class Car : MonoBehaviour {
 		//	Set speed
 		//	Move down lane
 		//	Turn at intersections
-
-		/*
-		 * if QUEUED
-		 * 		if FRONT CAR
-		 * 			if possible turn green, then state DRIVING
-		 * 		else
-		 * 			if next car is DRIVING, then state DRIVING
-		 * if DRIVING
-		 * 		if at intersection OR next car is QUEUED and right behind it
-		 * 			then state QUEUED
-		 * 		else
-		 * 			keep safe distance, drive at desired speed, etc.
-		 */
-				
 	}
 
 	void StartNewLane()
@@ -67,7 +53,7 @@ public class Car : MonoBehaviour {
 		
 		if (distanceOnLane > currentLane.Length)
 		{
-			transform.position = new Vector3(currentLane.to.transform.position.x, currentLane.to.transform.position.y, 0);
+			transform.position = new Vector3(currentLane.To.transform.position.x, currentLane.To.transform.position.y, 0);
 			distanceOnLane -= currentLane.Speed;
 			return;
 		}
@@ -81,11 +67,12 @@ public class Car : MonoBehaviour {
 	//Otherwise all possible next turns are generated and the best lane chosen for new routes.
 	//These new routes are pushed at the end of the queue.
 	public void RecomputeRoute() {
-		Connection nextNode = currentLane.to;
+		Connection nextNode = currentLane.To;
 		Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
 
 		while(routes.Count > 0) {
 			Route route = routes.Dequeue ();
+			Debug.Log (route);
 			if (route.EndPoint == destination) {
 				this.route = route;
 				route_index = 0;
