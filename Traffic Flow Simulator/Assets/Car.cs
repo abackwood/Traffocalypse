@@ -8,6 +8,8 @@ public class Car : MonoBehaviour {
 	public SourceSink source, destination;
 	public float distanceOnLane;
 	public Car nextCar;
+    public bool waitIntersection = false;
+    public bool onIntersection = false;
 
 	Route route;
 	int route_index;
@@ -26,16 +28,18 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Some sort of pathfinding
-		if(route_index == -1) {
-			RecomputeRoute ();
-			Debug.Log ("Final Route: " + route);
-		}
+        //if(route_index == -1) {
+        //    RecomputeRoute ();
+        //    Debug.Log ("Final Route: " + route);
+        //}
 
 		//Driving
 		//	Collision prevention
 		//	Set speed
 		//	Move down lane
 		//	Turn at intersections
+
+        Move();
 	}
 
 	void StartNewLane()
@@ -44,20 +48,40 @@ public class Car : MonoBehaviour {
 	
 	void Move()
 	{
+        
 		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.Speed)
 		{
 			return;
 		}
+
+        Intersection intersection = currentLane.To as Intersection;
+        if(onIntersection)
+        {
+            currentLane = intersection.roads[1].LanesForward[0];
+            transform.position = new Vector3(currentLane.FromPosition.x, currentLane.FromPosition.y, 0);
+            distanceOnLane = 0;
+            onIntersection = false;
+            return;
+        }
+
 		
 		distanceOnLane += currentLane.Speed;
-		
-		if (distanceOnLane > currentLane.Length)
+
+		if (intersection != null && distanceOnLane > currentLane.Length - 5)
 		{
-			transform.position = new Vector3(currentLane.To.transform.position.x, currentLane.To.transform.position.y, 0);
-			distanceOnLane -= currentLane.Speed;
-			return;
+            waitIntersection = true;
+            System.Threading.Thread.Sleep(1000);
+            waitIntersection = false;
+            onIntersection = true;
+            return;
 		}
-		
+        else if(distanceOnLane > currentLane.length)
+        {
+            transform.position = new Vector3(currentLane.ToPosition.x, currentLane.ToPosition.y, 0);
+            distanceOnLane -= currentLane.Speed;
+            return;
+        }
+
 		transform.Translate(new Vector3(currentLane.SpeedX, currentLane.SpeedY, 0));
 	}
 
@@ -66,32 +90,38 @@ public class Car : MonoBehaviour {
 	//If this route ends in the destination this is the new route
 	//Otherwise all possible next turns are generated and the best lane chosen for new routes.
 	//These new routes are pushed at the end of the queue.
-	public void RecomputeRoute() {
-		Connection nextNode = currentLane.To;
-		Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
+    public void RecomputeRoute()
+    {
+        Connection nextNode = currentLane.To;
+        Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
 
-		while(routes.Count > 0) {
-			Route route = routes.Dequeue ();
-			Debug.Log (route);
-			if (route.EndPoint == destination) {
-				this.route = route;
-				route_index = 0;
-				return;
-			}
-			else {
-				ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
-				if(possibleNextTurns == null) {
-					continue;
-				}
-				foreach(PossibleTurn turn in possibleNextTurns) {
-					ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-					Route new_route = new Route(route,bestTurn,ai);
-					routes.Enqueue(new_route);
-				}
-			}
-		}
-		route_index = 0;
-	}
+        while (routes.Count > 0)
+        {
+            Route route = routes.Dequeue();
+            Debug.Log(route);
+            if (route.EndPoint == destination)
+            {
+                this.route = route;
+                route_index = 0;
+                return;
+            }
+            else
+            {
+                ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
+                if (possibleNextTurns == null)
+                {
+                    continue;
+                }
+                foreach (PossibleTurn turn in possibleNextTurns)
+                {
+                    ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
+                    Route new_route = new Route(route, bestTurn, ai);
+                    routes.Enqueue(new_route);
+                }
+            }
+        }
+        route_index = 0;
+    }
 
 	ICollection<Route> GenerateRoutesFromNextNode(Connection nextNode) {
 		if(nextNode.GetType().Equals (typeof(SourceSink))) {
