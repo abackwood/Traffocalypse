@@ -12,6 +12,8 @@ public class Car : MonoBehaviour {
 	public SourceSink source, destination;
 	public float distanceOnLane;
 	public Car nextCar;
+	public bool waitIntersection = false;
+	public bool onIntersection = false;
 
 	Route route;
 	int route_index;
@@ -41,6 +43,7 @@ public class Car : MonoBehaviour {
 		}
 
 		//Driving
+		Move();
 		//	Collision prevention
 		//	Set speed
 		//	Move down lane
@@ -71,21 +74,45 @@ public class Car : MonoBehaviour {
 	
 	void Move()
 	{
-		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.Speed)
+		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.speedLimit)
 		{
 			return;
 		}
 		
-		distanceOnLane += currentLane.Speed;
-		
-		if (distanceOnLane > currentLane.Length)
+		Intersection intersection = currentLane.to as Intersection;
+		if(onIntersection)
 		{
-			transform.position = new Vector3(currentLane.to.transform.position.x, currentLane.to.transform.position.y, 0);
-			distanceOnLane -= currentLane.Speed;
+			foreach(PossibleTurn turn in intersection.PossibleTurns) {
+				if(turn.LaneIn == currentLane) {
+					currentLane = turn.LanesOut[0];
+				}
+			}
+
+			transform.position = new Vector3(currentLane.startPoint.x, currentLane.startPoint.y, 0);
+			distanceOnLane = 0;
+			onIntersection = false;
 			return;
 		}
 		
-		transform.Translate(new Vector3(currentLane.SpeedX, currentLane.SpeedY, 0));
+		
+		distanceOnLane += currentLane.speedLimit;
+		
+		if (intersection != null && distanceOnLane > currentLane.length - 5)
+		{
+			waitIntersection = true;
+			//TODO Some sort of waiting mechanism, probably by checking if the intersection will allow you to keep driving
+			waitIntersection = false;
+			onIntersection = true;
+			return;
+		}
+		else if(distanceOnLane > currentLane.length)
+		{
+			transform.position = new Vector3(currentLane.endPoint.x, currentLane.endPoint.y, 0);
+			distanceOnLane -= currentLane.speedLimit;
+			return;
+		}
+		
+		transform.Translate(currentLane.direction * currentLane.speedLimit);
 	}
 
 	//Recomputes route of the agent

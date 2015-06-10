@@ -26,6 +26,8 @@ public class CarSpawner : MonoBehaviour {
 
 			Lane[] possibleLanes = car.source.road.OutLanes(car.source);
 			car.currentLane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
+			car.distanceOnLane = 0;
+			car.transform.position = car.currentLane.startPoint;
 
 			car.ReachedDestination += OnCarReachedDestination;
 

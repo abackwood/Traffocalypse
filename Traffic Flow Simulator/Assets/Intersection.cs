@@ -58,19 +58,19 @@ public struct PossibleTurn {
 		get { return lanesOut; }
 	}
 
-	Vector3[] laneIntersections;
-	public Vector3[] LaneIntersections {
-		get { return laneIntersections; }
+	Vector3[] laneTurnPoints;
+	public Vector3[] LaneTurnPoints {
+		get { return laneTurnPoints; }
 	}
 
 	public PossibleTurn(Lane laneIn, Lane[] lanesOut) {
 		this.laneIn = laneIn;
 		this.lanesOut = lanesOut;
 
-		laneIntersections = new Vector3[lanesOut.Length];
+		laneTurnPoints = new Vector3[lanesOut.Length];
 		for(int i = 0 ; i < lanesOut.Length ; i++) {
 			Vector2 intersection = LaneIntersectionPoint(laneIn, lanesOut[i]);
-			laneIntersections[i] = new Vector3(intersection.x, intersection.y, 0);
+			laneTurnPoints[i] = new Vector3(intersection.x, intersection.y, 0);
 		}
 	}
 
@@ -118,7 +118,7 @@ public struct ExplicitTurn {
 		get { return turn.LanesOut[index]; }
 	}
 	public Vector3 TurnPoint {
-		get { return turn.LaneIntersections[index]; }
+		get { return turn.LaneTurnPoints[index]; }
 	}
 
 	public ExplicitTurn(PossibleTurn turn, int index) {

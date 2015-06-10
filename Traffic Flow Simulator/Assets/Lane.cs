@@ -8,29 +8,28 @@ public class Lane : MonoBehaviour {
 	public Connection from, to;
 	public Vector3 startPoint, endPoint;
 
-	public float Length
-	{
-		get { return road.length; }
-	}
-	
-	public float Speed
-	{
-		get { return road.speed; }
-	}
-	
-	public float SpeedX
-	{
-		get { return road.SpeedX; }
-	}
-	
-	public float SpeedY
-	{
-		get { return road.SpeedY; }
-	}
+	public float length;
+	public Vector3 direction;
+
+	public float speedLimit;
 	
 	List<Car> carsOnLane;
 	public Car[] CarsOnLane {
 		get { return carsOnLane.ToArray(); }
+	}
+
+	public void CalculateSpeedAndDirection(float speedLimit)
+	{
+		Vector3 difference = endPoint - startPoint;
+		length = difference.magnitude;
+		direction = difference.normalized;
+		speedLimit = speedLimit;
+	}
+
+	public void SetupLineRenderer() {
+		LineRenderer renderer = GetComponent<LineRenderer>();
+		renderer.SetPosition(0,startPoint);
+		renderer.SetPosition(1,endPoint);
 	}
 	
 	public void Subscribe(Car car)

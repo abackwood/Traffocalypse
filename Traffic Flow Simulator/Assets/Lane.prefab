@@ -44,6 +44,11 @@ MonoBehaviour:
   id: 0
   from: {fileID: 0}
   to: {fileID: 0}
+  startPoint: {x: 0, y: 0, z: 0}
+  endPoint: {x: 0, y: 0, z: 0}
+  length: 0
+  direction: {x: 0, y: 0, z: 0}
+  speedLimit: .5
 --- !u!120 &12000872
 LineRenderer:
   m_ObjectHideFlags: 1
