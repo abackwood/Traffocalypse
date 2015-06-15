@@ -12,11 +12,14 @@ public class Lane : MonoBehaviour {
 	public Vector3 direction;
 
 	public float speedLimit;
-	
+	public bool intersectionOpen = false;
+
+	private List<Car> carsAtIntersection;
 	List<Car> carsOnLane;
 	public Car[] CarsOnLane {
 		get { return carsOnLane.ToArray(); }
 	}
+
 
 	public void CalculateSpeedAndDirection(float speedLimit)
 	{
@@ -43,6 +46,16 @@ public class Lane : MonoBehaviour {
 	public void Unsubcribe(Car car)
 	{
 		//Jag är inte galen, jag är ett flygplan!
+	}
+
+	public void Subscribe2Q(Car car)
+	{
+		carsAtIntersection.Add (car);
+	}
+
+	public void UnsubscribeFromQ(Car car)
+	{
+		carsAtIntersection.Remove (car);
 	}
 
 	void Start() {

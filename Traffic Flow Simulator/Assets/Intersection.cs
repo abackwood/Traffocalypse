@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Intersection : Connection {
 	public Road[] roads;
 	public PossibleTurn[] PossibleTurns { get; private set; }
+	public TrafficAgent agent; 
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,8 @@ public class Intersection : Connection {
 			list.AddRange (FindPossibleTurns(r));
 		}
 		PossibleTurns = list.ToArray();
+
+
 
 		string s = name + " possible turns: ";
 		foreach(PossibleTurn pt in PossibleTurns) {

@@ -74,43 +74,50 @@ public class Car : MonoBehaviour {
 	
 	void Move()
 	{
-		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.speedLimit)
-		{
-			return;
-		}
-		
 		Intersection intersection = currentLane.to as Intersection;
-		if(onIntersection)
-		{
-			foreach(PossibleTurn turn in intersection.PossibleTurns) {
-				if(turn.LaneIn == currentLane) {
-					currentLane = turn.LanesOut[0];
-				}
-			}
 
-			transform.position = new Vector3(currentLane.startPoint.x, currentLane.startPoint.y, 0);
-			distanceOnLane = 0;
-			onIntersection = false;
-			return;
-		}
-		
-		
-		distanceOnLane += currentLane.speedLimit;
-		
+		// First check whether we reached the intersection
 		if (intersection != null && distanceOnLane > currentLane.length - 5)
 		{
-			waitIntersection = true;
-			//TODO Some sort of waiting mechanism, probably by checking if the intersection will allow you to keep driving
-			waitIntersection = false;
-			onIntersection = true;
-			return;
+			// If the traffic light is green, go ahead
+			if(currentLane.intersectionOpen)
+			{
+				currentLane.UnsubscribeFromQ(this);
+
+				foreach(PossibleTurn turn in intersection.PossibleTurns) {
+					if(turn.LaneIn == currentLane) {
+						currentLane = turn.LanesOut[0];
+					}
+				}
+				
+				transform.position = new Vector3(currentLane.startPoint.x, currentLane.startPoint.y, 0);
+				onIntersection = false;
+				distanceOnLane = 0;
+
+				return;
+			}
+			else
+			{
+				if(!onIntersection)
+				{
+					currentLane.Subscribe2Q(this);
+					onIntersection = true;
+				}
+				return;
+			}
 		}
-		else if(distanceOnLane > currentLane.length)
+
+		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.speedLimit)
 		{
-			transform.position = new Vector3(currentLane.endPoint.x, currentLane.endPoint.y, 0);
-			distanceOnLane -= currentLane.speedLimit;
+			if (nextCar.onIntersection && !onIntersection)
+			{
+				onIntersection = true;
+				currentLane.Subscribe2Q(this);
+			}
 			return;
-		}
+		}		
+		
+		distanceOnLane += currentLane.speedLimit;
 		
 		transform.Translate(currentLane.direction * currentLane.speedLimit);
 	}
