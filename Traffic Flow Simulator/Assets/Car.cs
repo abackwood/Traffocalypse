@@ -15,6 +15,9 @@ public class Car : MonoBehaviour {
 	public bool waitIntersection = false;
 	public bool onIntersection = false;
 
+	//TODO make extendable states
+	public CarState state;
+
 	Route route;
 	int route_index;
 
@@ -182,4 +185,10 @@ public class Car : MonoBehaviour {
 		}
 		return argmax;
 	}
+}
+
+public enum CarState {
+	DRIVING,
+	QUEUED,
+	BROKEN
 }
