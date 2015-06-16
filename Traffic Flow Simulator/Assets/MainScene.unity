@@ -185,7 +185,8 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 50
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11410276, guid: 2814c7ab28dbff84e9d2e211da9e6a9f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2814c7ab28dbff84e9d2e211da9e6a9f, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &248041732 stripped

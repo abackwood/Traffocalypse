@@ -14,7 +14,7 @@ public class Lane : MonoBehaviour {
 	public float speedLimit;
 	public bool intersectionOpen = false;
 
-	private List<Car> carsAtIntersection;
+	public List<Car> carsAtIntersection;
 	List<Car> carsOnLane;
 	public Car[] CarsOnLane {
 		get { return carsOnLane.ToArray(); }

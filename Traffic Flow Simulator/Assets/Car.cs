@@ -12,7 +12,6 @@ public class Car : MonoBehaviour {
 	public SourceSink source, destination;
 	public float distanceOnLane;
 	public Car nextCar;
-	public bool waitIntersection = false;
 	public bool onIntersection = false;
 
 	Route route;
@@ -82,7 +81,10 @@ public class Car : MonoBehaviour {
 			// If the traffic light is green, go ahead
 			if(currentLane.intersectionOpen)
 			{
-				currentLane.UnsubscribeFromQ(this);
+				if (onIntersection){
+					currentLane.UnsubscribeFromQ(this);
+					onIntersection = false;
+				}
 
 				foreach(PossibleTurn turn in intersection.PossibleTurns) {
 					if(turn.LaneIn == currentLane) {
@@ -91,7 +93,6 @@ public class Car : MonoBehaviour {
 				}
 				
 				transform.position = new Vector3(currentLane.startPoint.x, currentLane.startPoint.y, 0);
-				onIntersection = false;
 				distanceOnLane = 0;
 
 				return;
