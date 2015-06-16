@@ -30,8 +30,12 @@ public class Intersection : Connection {
 		Debug.Log (s);
 	}
 
-	//Returns the list of all possible turns from road r
-	//For every lane coming in from r, a possible turn is to an outgoing lane of another road
+	/// <summary>
+	/// Returns all possible turns that can be made from this road at this intersection.
+	/// A possible turn is from an incoming lane on r to all outgoing lanes of another road.
+	/// </summary>
+	/// <returns>The list of possible turns for this intersection.</returns>
+	/// <param name="r">The road.</param>
 	List<PossibleTurn> FindPossibleTurns(Road r) {
 		List<PossibleTurn> list = new List<PossibleTurn>();
 		foreach(Road r1 in roads) {
