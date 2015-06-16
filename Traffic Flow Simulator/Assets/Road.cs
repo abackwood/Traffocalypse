@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Road : MonoBehaviour {
+    public Transform car; // temp for testing
+
 	public Connection from, to;
 	public bool oneWay;
 	public int lanes;
@@ -104,7 +106,8 @@ public class Road : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        InitRoad();
+        Lanes[0].CreateCar();
 	}
 	
 	// Update is called once per frame

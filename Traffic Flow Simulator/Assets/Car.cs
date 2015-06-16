@@ -23,6 +23,9 @@ public class Car : MonoBehaviour {
 
 	CarAI ai;
 
+    public int[] speeds = new int[7] {0, 20, 40, 60, 80, 100, 120};
+    public int currentSpeed = 0;
+
 	// Use this for initialization
 	void Start () {
 		ai = new SimpleCarAI();
@@ -36,16 +39,17 @@ public class Car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Some sort of pathfinding
-		if(route_index == -1) {
-			RecomputeRoute ();
-			Debug.Log ("Final Route: " + route);
-		}
+        //if(route_index == -1) {
+        //    RecomputeRoute ();
+        //    Debug.Log ("Final Route: " + route);
+        //}
 
-		if(IsAtDestination() && ReachedDestination != null) {
-			ReachedDestination(this);
-		}
+        //if(IsAtDestination() && ReachedDestination != null) {
+        //    ReachedDestination(this);
+        //}
 
 		//Driving
+        CheckSpeed();
 		Move();
 		//	Collision prevention
 		//	Set speed
@@ -74,7 +78,31 @@ public class Car : MonoBehaviour {
 	void StartNewLane()
 	{
 	}
-	
+
+    void CheckSpeed()
+    {
+        float leftOnLane = currentLane.length - distanceOnLane;
+        float beforeStop = 0;
+        int tempCurrentSpeed = currentSpeed;
+        while (tempCurrentSpeed != 0)
+        {
+            tempCurrentSpeed -= 1;
+            beforeStop += speeds[tempCurrentSpeed];
+        }
+
+        if ((beforeStop + speeds[currentSpeed])/10 >= leftOnLane)
+        {
+            if (currentSpeed != 0)
+                currentSpeed--;
+        }
+        else if (currentSpeed < speeds.Length - 1)
+        {
+            if (speeds[currentSpeed + 1] <= currentLane.speedLimit)
+                currentSpeed++;
+        }
+        Debug.Log(currentSpeed + " " + speeds[currentSpeed] + " " + distanceOnLane + " " + beforeStop);
+    }
+
 	void Move()
 	{
 		Intersection intersection = currentLane.to as Intersection;
@@ -118,11 +146,11 @@ public class Car : MonoBehaviour {
 				currentLane.Subscribe2Q(this);
 			}
 			return;
-		}		
+		}
+
+        distanceOnLane += speeds[currentSpeed] / 100;
 		
-		distanceOnLane += currentLane.speedLimit;
-		
-		transform.Translate(currentLane.direction * currentLane.speedLimit);
+		transform.Translate(currentLane.direction * speeds[currentSpeed] / 100);
 	}
 
 	//Recomputes route of the agent

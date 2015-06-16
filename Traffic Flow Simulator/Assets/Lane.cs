@@ -26,7 +26,7 @@ public class Lane : MonoBehaviour {
 		Vector3 difference = endPoint - startPoint;
 		length = difference.magnitude;
 		direction = difference.normalized;
-		speedLimit = speedLimit;
+		this.speedLimit = speedLimit;
 	}
 
 	public void SetupLineRenderer() {
@@ -58,8 +58,11 @@ public class Lane : MonoBehaviour {
 		carsAtIntersection.Remove (car);
 	}
 
-	void Start() {
+	public void CreateCar() {
 		carsOnLane = new List<Car>();
+        Transform newCar = Instantiate(road.car, startPoint, Quaternion.identity) as Transform;
+        Car carScript = newCar.GetComponent<Car>();
+        carScript.currentLane = this;
 	}
 
 	void Update() {
