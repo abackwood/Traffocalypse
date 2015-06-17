@@ -8,25 +8,27 @@ public class Car : MonoBehaviour {
 	public event CarEventHandler Spawned, ReachedDestination;
 
 	public Lane currentLane;
-	public float position;
 	public SourceSink source, destination;
 	public float distanceOnLane;
 	public Car nextCar;
-	public bool waitIntersection = false;
-	public bool onIntersection = false;
 
-	//TODO make extendable states
 	public CarState state;
+	public float speed;
 
 	Route route;
 	int route_index;
+	public ExplicitTurn NextTurn {
+		get { return route[route_index]; }
+	}
 
 	CarAI ai;
 
 	// Use this for initialization
 	void Start () {
-		ai = new SimpleCarAI();
+		ai = new CarAI(this);
 		route_index = -1;
+
+		currentLane.Subscribe(this);
 
 		if(Spawned != null) {
 			Spawned(this);
@@ -45,30 +47,16 @@ public class Car : MonoBehaviour {
 			ReachedDestination(this);
 		}
 
-		//Driving
+		ai.Update();
 		Move();
 		//	Collision prevention
 		//	Set speed
 		//	Move down lane
 		//	Turn at intersections
-
-		/*
-		 * if QUEUED
-		 * 		if FRONT CAR
-		 * 			if possible turn green, then state DRIVING
-		 * 		else
-		 * 			if next car is DRIVING, then state DRIVING
-		 * if DRIVING
-		 * 		if at intersection OR next car is QUEUED and right behind it
-		 * 			then state QUEUED
-		 * 		else
-		 * 			keep safe distance, drive at desired speed, etc.
-		 */
-				
 	}
 
 	bool IsAtDestination() {
-		return Vector3.Distance(transform.position, destination.transform.position) < 0.1f;
+		return currentLane.to == destination && currentLane.length - distanceOnLane <= 0;
 	}
 
 	void StartNewLane()
@@ -77,52 +65,39 @@ public class Car : MonoBehaviour {
 	
 	void Move()
 	{
+		float trueSpeed = speed * Time.deltaTime;
+		Vector3 movement = currentLane.direction * trueSpeed;
+
 		Intersection intersection = currentLane.to as Intersection;
 
-		// First check whether we reached the intersection
-		if (intersection != null && distanceOnLane > currentLane.length - 5)
-		{
-			// If the traffic light is green, go ahead
-			if(currentLane.intersectionOpen)
-			{
-				currentLane.UnsubscribeFromQ(this);
-
-				foreach(PossibleTurn turn in intersection.PossibleTurns) {
-					if(turn.LaneIn == currentLane) {
-						currentLane = turn.LanesOut[0];
-					}
-				}
+		if(intersection != null) {
+			float distanceToTurn = Vector3.Distance(transform.position, NextTurn.TurnPoint);
+			
+			//If a turn point will be reached special actions need to be taken
+			if(movement.magnitude > distanceToTurn) {
+				Lane newLane = NextTurn.LaneOut;	//Find new lane
+				float newDistanceOnLane = Vector3.Distance(NextTurn.TurnPoint, newLane.startPoint);
 				
-				transform.position = new Vector3(currentLane.startPoint.x, currentLane.startPoint.y, 0);
-				onIntersection = false;
-				distanceOnLane = 0;
+				//Move position and adjust car location internally
+				transform.position = NextTurn.TurnPoint;	//Drive to next turn
+				SwitchToLane(newLane);
+				distanceOnLane = -newDistanceOnLane;		//You start somewhat behind the start of the lane
 
-				return;
-			}
-			else
-			{
-				if(!onIntersection)
-				{
-					currentLane.Subscribe2Q(this);
-					onIntersection = true;
-				}
-				return;
+				route_index++;
+
+				//Recalculate speed and movement
+				trueSpeed = movement.magnitude - distanceToTurn;	//Speed is now the rest after driving to the turn
+				movement = currentLane.direction * trueSpeed;	//Recalculate movement
 			}
 		}
 
-		if (nextCar != null && nextCar.distanceOnLane - distanceOnLane < 200 * currentLane.speedLimit)
-		{
-			if (nextCar.onIntersection && !onIntersection)
-			{
-				onIntersection = true;
-				currentLane.Subscribe2Q(this);
-			}
-			return;
-		}		
-		
-		distanceOnLane += currentLane.speedLimit;
-		
-		transform.Translate(currentLane.direction * currentLane.speedLimit);
+		distanceOnLane += trueSpeed;
+		transform.Translate(movement);
+	}
+	void SwitchToLane(Lane lane) {
+		currentLane.Unsubcribe(this);
+		currentLane = lane;
+		currentLane.Subscribe(this);
 	}
 
 	//Recomputes route of the agent
@@ -164,9 +139,11 @@ public class Car : MonoBehaviour {
 			List<Route> routes = new List<Route>();
 			Intersection intersection = (Intersection)nextNode;
 			foreach(PossibleTurn turn in intersection.PossibleTurns) {
-				ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-				Route new_route = new Route(bestTurn,ai);
-				routes.Add (new_route);
+				if(turn.LaneIn == currentLane) {
+					ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
+					Route new_route = new Route(bestTurn,ai);
+					routes.Add (new_route);
+				}
 			}
 			return routes;
 		}
@@ -190,5 +167,5 @@ public class Car : MonoBehaviour {
 public enum CarState {
 	DRIVING,
 	QUEUED,
-	BROKEN
+	ON_INTERSECTION
 }

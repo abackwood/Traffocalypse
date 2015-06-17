@@ -13,11 +13,11 @@ public class TrafficAgent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		foreach (Road r in intersection.roads) {
+		/*foreach (Road r in intersection.roads) {
 			foreach(Lane l in r.InLanes(intersection)){
 				lanes.Add(l);
 			}
-		}
+		}*/
 		status = 0;
 		timeSpan = greenTime;
 	}
@@ -28,14 +28,14 @@ public class TrafficAgent : MonoBehaviour {
 		if (timeSpan < 0) {
 
 			timeSpan = greenTime;
-			lanes[status].intersectionOpen = false;
+			//lanes[status].intersectionOpen = false;
 
 			if (status == lanes.Count - 1) 
 				status = 0;
 			else
 				status += 1;
 
-			lanes[status].intersectionOpen = true;
+			//lanes[status].intersectionOpen = true;
 		}
 
 		

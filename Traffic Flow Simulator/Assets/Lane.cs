@@ -12,12 +12,11 @@ public class Lane : MonoBehaviour {
 	public Vector3 direction;
 
 	public float speedLimit;
-	public bool intersectionOpen = false;
 
 	private List<Car> carsAtIntersection;
-	private List<Car> carsOnLane;
-	public Car[] CarsOnLane {
-		get { return carsOnLane.ToArray(); }
+	private LinkedList<Car> carsOnLane;
+	public ICollection<Car> CarsOnLane {
+		get { return carsOnLane; }
 	}
 
 	/// <summary>
@@ -43,15 +42,21 @@ public class Lane : MonoBehaviour {
 	
 	public void Subscribe(Car car)
 	{
-		int count = carsOnLane.Count - 1;
-		if (count > -1)
-			car.nextCar = carsOnLane[count];
-		carsOnLane.Add(car);
+		if(carsOnLane.Count > 0) {
+			car.nextCar = carsOnLane.Last.Value;
+		}
+		carsOnLane.AddLast(car);
 	}
 	
 	public void Unsubcribe(Car car)
 	{
-		//Jag är inte galen, jag är ett flygplan!
+		LinkedListNode<Car> node = carsOnLane.Find (car);
+		if(node != null) {
+			if(node.Next != null) {
+				node.Next.Value.nextCar = node.Previous == null ? null : node.Previous.Value;
+			}
+			carsOnLane.Remove(node);
+		}
 	}
 
 	/// <summary>
@@ -73,7 +78,7 @@ public class Lane : MonoBehaviour {
 	}
 
 	void Start() {
-		carsOnLane = new List<Car>();
+		carsOnLane = new LinkedList<Car>();
 		carsAtIntersection = new List<Car>();
 	}
 
