@@ -25,6 +25,8 @@ public class Car : MonoBehaviour {
 
     public float[] speeds = new float[7] {0, 0.2f, 0.4f, 0.6f, 0.8f, 1.0f, 1.2f};
     public int currentSpeed = 0;
+    public int gearChangeTimeNeeded = 3;
+    public int timeSinceLastChange = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -81,6 +83,13 @@ public class Car : MonoBehaviour {
 
     void CheckSpeed()
     {
+        timeSinceLastChange++;
+        if (timeSinceLastChange < gearChangeTimeNeeded)
+        {
+            Debug.Log("do nothing");
+            return;
+        }
+
         // Calculate break time and free distance on road (currently doesn't take other cars into acount)
         float leftOnLane = currentLane.length - distanceOnLane;
         float beforeStop = 0;
@@ -88,14 +97,15 @@ public class Car : MonoBehaviour {
         while (tempCurrentSpeed != 0)
         {
             tempCurrentSpeed -= 1;
-            beforeStop += speeds[tempCurrentSpeed];
+            beforeStop += (speeds[tempCurrentSpeed] * gearChangeTimeNeeded);
         }
 
         // Check if we need to hit the break
-        if ((beforeStop + speeds[currentSpeed]) >= leftOnLane)
+        if ((beforeStop + (3 * speeds[currentSpeed])) >= leftOnLane)
         {
             if (currentSpeed != 0)
                 currentSpeed--;
+            timeSinceLastChange = 0;
         }
 
         // Check if we can accerlate
@@ -103,6 +113,7 @@ public class Car : MonoBehaviour {
         {
             if (speeds[currentSpeed + 1] <= currentLane.speedLimit)
                 currentSpeed++;
+            timeSinceLastChange = 0;
         }
 
         // Debug info
