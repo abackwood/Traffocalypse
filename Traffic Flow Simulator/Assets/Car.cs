@@ -23,7 +23,7 @@ public class Car : MonoBehaviour {
 
 	CarAI ai;
 
-    public int[] speeds = new int[7] {0, 20, 40, 60, 80, 100, 120};
+    public float[] speeds = new float[7] {0, 0.2f, 0.4f, 0.6f, 0.8f, 1.0f, 1.2f};
     public int currentSpeed = 0;
 
 	// Use this for initialization
@@ -81,6 +81,7 @@ public class Car : MonoBehaviour {
 
     void CheckSpeed()
     {
+        // Calculate break time and free distance on road (currently doesn't take other cars into acount)
         float leftOnLane = currentLane.length - distanceOnLane;
         float beforeStop = 0;
         int tempCurrentSpeed = currentSpeed;
@@ -90,16 +91,21 @@ public class Car : MonoBehaviour {
             beforeStop += speeds[tempCurrentSpeed];
         }
 
-        if ((beforeStop + speeds[currentSpeed])/10 >= leftOnLane)
+        // Check if we need to hit the break
+        if ((beforeStop + speeds[currentSpeed]) >= leftOnLane)
         {
             if (currentSpeed != 0)
                 currentSpeed--;
         }
+
+        // Check if we can accerlate
         else if (currentSpeed < speeds.Length - 1)
         {
             if (speeds[currentSpeed + 1] <= currentLane.speedLimit)
                 currentSpeed++;
         }
+
+        // Debug info
         Debug.Log(currentSpeed + " " + speeds[currentSpeed] + " " + distanceOnLane + " " + beforeStop);
     }
 
@@ -148,9 +154,9 @@ public class Car : MonoBehaviour {
 			return;
 		}
 
-        distanceOnLane += speeds[currentSpeed] / 100;
+        distanceOnLane += speeds[currentSpeed];
 		
-		transform.Translate(currentLane.direction * speeds[currentSpeed] / 100);
+		transform.Translate(currentLane.direction * speeds[currentSpeed]);
 	}
 
 	//Recomputes route of the agent

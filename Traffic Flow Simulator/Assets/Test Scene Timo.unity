@@ -140,7 +140,7 @@ Prefab:
       objectReference: {fileID: 409722, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
     - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
       propertyPath: speedLimit
-      value: 80
+      value: 1.20000005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
