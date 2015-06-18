@@ -20,6 +20,7 @@ public class Intersection : Connection {
 		PossibleTurns = list.ToArray();
 
 		OpenTurns = new List<PossibleTurn>(PossibleTurns);
+		//OpenTurns = new List<PossibleTurn>();
 
 		string s = name + " possible turns: ";
 		foreach(PossibleTurn pt in PossibleTurns) {

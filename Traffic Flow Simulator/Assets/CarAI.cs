@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CarAI {
 	public static readonly float WAIT_MARGIN = 5;
-	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 5;
+	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 1;
 	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 1;
 	public static readonly float SLOWDOWN_MARGIN = 1;
 
@@ -24,12 +24,12 @@ public class CarAI {
 			if(car.nextCar == null) {
 				bool allowedToDrive = intersection.IsOpen(car.NextTurn.Parent);
 				if(allowedToDrive) {
-					StartDriving();
+					OnLightTurnedGreen(intersection);
 				}
 			}
 			else {
 				if(car.nextCar.state == CarState.DRIVING) {
-					car.state = CarState.DRIVING;
+					OnCarInFrontStartedDriving();
 				}
 			}
 		}
@@ -42,19 +42,18 @@ public class CarAI {
 				Car nextCar = car.nextCar;
 
 				float distanceToNextCar = (nextCar.distanceOnLane - car.distanceOnLane);
-				float targetDistance = Mathf.Max(MINIMUM_DISTANCE_TO_NEXT_CAR, car.speed * TARGET_SECONDS_TO_NEXT_CAR);
-				if(distanceToNextCar < targetDistance) {
-					car.speed = car.nextCar.speed - SLOWDOWN_MARGIN;
-					if(nextCar.state == CarState.QUEUED) {
-						Queue();
-					}
-				}
+				KeepDistanceFromNextCar(distanceToNextCar);
 			}
 
-			//If you are the front car and you've reached the intersection, queue for the intersection
+			//If you are the front car and you've reached the intersection, respond to the red or green light
 			else if(car.state == CarState.DRIVING &&
 			        ReachedIntersection(intersection)) {
-				Queue();
+				if(intersection.IsOpen(car.NextTurn.Parent)) {
+					OnLightGreen(intersection);
+				}
+				else {
+					OnLightRed(intersection);
+				}
 			}
 
 			//Detect when no longer on intersection
@@ -69,6 +68,32 @@ public class CarAI {
 		return intersection != null &&
 				car.currentLane.length - car.distanceOnLane < WAIT_MARGIN &&
 				!intersection.IsOpen(car.NextTurn.Parent);
+	}
+
+	void OnLightRed(Intersection intersection) {
+		Queue();
+	}
+
+	void OnLightGreen(Intersection intersection) {
+		StartDriving();
+	}
+
+	void OnLightTurnedGreen(Intersection intersection) {
+		StartDriving();
+	}
+
+	void OnCarInFrontStartedDriving() {
+		car.state = CarState.DRIVING;
+	}
+
+	void KeepDistanceFromNextCar(float distance) {
+		float targetDistance = Mathf.Max(MINIMUM_DISTANCE_TO_NEXT_CAR, car.speed * TARGET_SECONDS_TO_NEXT_CAR);
+		if(distance < targetDistance) {
+			car.speed = car.nextCar.speed - SLOWDOWN_MARGIN;
+			if(car.nextCar.state == CarState.QUEUED) {
+				Queue();
+			}
+		}
 	}
 
 	void Queue() {
