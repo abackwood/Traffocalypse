@@ -46,8 +46,8 @@ MonoBehaviour:
   destination: {fileID: 0}
   distanceOnLane: 0
   nextCar: {fileID: 0}
-  waitIntersection: 0
   onIntersection: 0
+  state: 0
 --- !u!212 &21242112
 SpriteRenderer:
   m_ObjectHideFlags: 1

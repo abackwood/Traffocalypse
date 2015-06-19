@@ -49,6 +49,7 @@ MonoBehaviour:
   length: 0
   direction: {x: 0, y: 0, z: 0}
   speedLimit: .5
+  intersectionOpen: 0
 --- !u!120 &12000872
 LineRenderer:
   m_ObjectHideFlags: 1

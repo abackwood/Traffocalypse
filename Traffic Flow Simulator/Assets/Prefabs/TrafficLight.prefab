@@ -44,6 +44,7 @@ MonoBehaviour:
   status: 0
   timeSpan: 0
   lanes: []
+  sliders: []
 --- !u!212 &21202994
 SpriteRenderer:
   m_ObjectHideFlags: 1
