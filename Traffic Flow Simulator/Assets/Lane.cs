@@ -11,6 +11,7 @@ public class Lane : MonoBehaviour {
 	public float length;
 	public Vector3 direction;
 
+	public LaneAnnotation annotation;
 	public float speedLimit;
 
 	private List<Car> carsAtIntersection;
@@ -94,4 +95,10 @@ public class Lane : MonoBehaviour {
 	{
 		return road.name + "-" + id;
 	}
+}
+
+public enum LaneAnnotation {
+	LEFT,
+	CENTER,
+	RIGHT
 }

@@ -5,7 +5,7 @@ public class CarAI {
 	public static readonly float WAIT_MARGIN = 5;
 	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 1;
 	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 1;
-	public static readonly float SLOWDOWN_MARGIN = 1;
+	public static readonly float SLOWDOWN_MARGIN = 2;
 
 	//Necessary fields
 	Car car;
@@ -24,9 +24,12 @@ public class CarAI {
 		return 1;
 	}
 
-	public float EvaluateLane(Lane lane) {
+	public float EvaluateLane(Lane currentLane, Lane lane) {
 		float density = lane.CarsOnLane.Count / lane.length;
-		return 1 / density;
+		float density_score = -density;
+		float closeness_score = -Vector3.Distance(currentLane.endPoint, lane.startPoint);
+
+		return 10 * density_score + closeness_score;
 	}
 
 	//Update behaviour
@@ -195,7 +198,7 @@ public class CarAI {
 		
 		for (int i = 0; i < turn.LanesOut.Length; i++)
 		{
-			float value = EvaluateLane(turn.LanesOut[i]);
+			float value = EvaluateLane(turn.LaneIn, turn.LanesOut[i]);
 			if (value > value_max)
 			{
 				argmax = new ExplicitTurn(turn, i);

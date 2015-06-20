@@ -54,7 +54,18 @@ public class Road : MonoBehaviour {
 			lanesBack = new Lane[0];
 			
 			for(int i = 0 ; i < lanes ; i++) {
-				Lane lane = SetupLane(i,from,to,minOffset);
+				LaneAnnotation annotation;
+				if(i == 0) {
+					annotation = LaneAnnotation.RIGHT;
+				}
+				else if(i == lanes - 1) {
+					annotation = LaneAnnotation.LEFT;
+				}
+				else {
+					annotation = LaneAnnotation.CENTER;
+				}
+
+				Lane lane = SetupLane(i,annotation,from,to,minOffset);
 				lane.SetupLineRenderer();
 
 				Lanes[i] = lane;
@@ -68,14 +79,36 @@ public class Road : MonoBehaviour {
 			
 			int i = 0;
 			for(int j = 0 ; j < numLanesForward ; i++, j++) {
-				Lane lane = SetupLane(i,from,to,minOffset);
+				LaneAnnotation annotation;
+				if(j == 0) {
+					annotation = LaneAnnotation.RIGHT;
+				}
+				else if(j == numLanesForward - 1) {
+					annotation = LaneAnnotation.LEFT;
+				}
+				else {
+					annotation = LaneAnnotation.CENTER;
+				}
+
+				Lane lane = SetupLane(i,annotation,from,to,minOffset);
 				lane.SetupLineRenderer();
 
 				Lanes[i] = lane;
 				LanesForward[j] = lane;
 			}
 			for(int j = 0 ; j < lanes - numLanesForward ; i++, j++) {
-				Lane lane = SetupLane(i,to,from,minOffset);
+				LaneAnnotation annotation;
+				if(j == lanes - numLanesForward - 1) {
+					annotation = LaneAnnotation.RIGHT;
+				}
+				else if(j == 0) {
+					annotation = LaneAnnotation.LEFT;
+				}
+				else {
+					annotation = LaneAnnotation.CENTER;
+				}
+
+				Lane lane = SetupLane(i,annotation,to,from,minOffset);
 				lane.SetupLineRenderer();
 
 				Lanes[i] = lane;
@@ -83,12 +116,13 @@ public class Road : MonoBehaviour {
 			}
 		}
 	}
-	Lane SetupLane(int id, Connection from, Connection to, float minOffset) {
+	Lane SetupLane(int id, LaneAnnotation annotation, Connection from, Connection to, float minOffset) {
 		Lane lane = GameObject.Instantiate(laneTemplate);
 		lane.transform.SetParent(transform);
 
 		lane.road = this;
 		lane.id = id;
+		lane.annotation = annotation;
 		lane.from = from;
 		lane.to = to;
 
