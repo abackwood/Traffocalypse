@@ -44,8 +44,9 @@ MonoBehaviour:
   oneWay: 0
   lanes: 2
   laneTemplate: {fileID: 11440692, guid: bc63d7d8d3542a648a3bc816978eacb2, type: 2}
-  laneSpacing: 5
-  speedLimit: 0
+  laneMargin: 5
+  laneSpacing: 3
+  speedLimit: 15
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

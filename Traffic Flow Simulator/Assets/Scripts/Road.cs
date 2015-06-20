@@ -7,6 +7,7 @@ public class Road : MonoBehaviour {
 	public bool oneWay;
 	public int lanes;
 	public Lane laneTemplate;
+	public float laneMargin;
 	public float laneSpacing;
 
 	public Lane[] Lanes { get; private set; }
@@ -96,6 +97,10 @@ public class Road : MonoBehaviour {
 
 		lane.startPoint = from.transform.position + (id * laneSpacing - minOffset) * ortho;
 		lane.endPoint = to.transform.position + (id * laneSpacing - minOffset) * ortho;
+
+		Vector3 localDirection = lane.to.transform.position - lane.from.transform.position;
+		lane.startPoint += localDirection.normalized * laneMargin;
+		lane.endPoint -= localDirection.normalized * laneMargin;
 
 		lane.CalculateSpeedAndDirection(speedLimit);
 

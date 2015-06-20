@@ -5,8 +5,10 @@ using System.Collections.Generic;
 
 public class Intersection : Connection {
 	public Road[] roads;
+	public TrafficAgent agent;
+
 	public PossibleTurn[] PossibleTurns { get; private set; }
-	public TrafficAgent agent; 
+	public List<PossibleTurn> OpenTurns { private get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +20,7 @@ public class Intersection : Connection {
 		PossibleTurns = list.ToArray();
 
 
+		OpenTurns = new List<PossibleTurn>();
 
 		string s = name + " possible turns: ";
 		foreach(PossibleTurn pt in PossibleTurns) {
@@ -50,7 +53,11 @@ public class Intersection : Connection {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+	}
+
+	public bool IsOpen(PossibleTurn turn) {
+		return OpenTurns.Contains(turn);
 	}
 }
 
@@ -106,8 +113,7 @@ public struct PossibleTurn {
 		// now return the Vector2 intersection point
 		return new Vector2(
 			(B2*C1 - B1*C2) / delta,
-			(A1*C2 - A2*C1) / delta
-			);
+			(A1*C2 - A2*C1) / delta);
 	}
 }
 
@@ -117,6 +123,9 @@ public struct ExplicitTurn {
 
 	public Intersection Intersection {
 		get { return (Intersection)LaneIn.to; }
+	}
+	public PossibleTurn Parent {
+		get { return turn; }
 	}
 	public Lane LaneIn {
 		get { return turn.LaneIn; }
