@@ -39,7 +39,11 @@ public class Lane : MonoBehaviour {
 		renderer.SetPosition(0,startPoint);
 		renderer.SetPosition(1,endPoint);
 	}
-	
+
+	/// <summary>
+	/// Subscribes the specified car to the back of the lane, assumed to be behind every other car already there
+	/// </summary>
+	/// <param name="car">The subscribing car.</param>
 	public void Subscribe(Car car)
 	{
 		if(carsOnLane.Count > 0) {
@@ -47,7 +51,11 @@ public class Lane : MonoBehaviour {
 		}
 		carsOnLane.AddLast(car);
 	}
-	
+
+	/// <summary>
+	/// Unsubscribes a car from the lane. The information about next cars is updated for the other cars still on the lane
+	/// </summary>
+	/// <param name="car">The car that's leaving.</param>
 	public void Unsubcribe(Car car)
 	{
 		LinkedListNode<Car> node = carsOnLane.Find (car);
@@ -80,10 +88,6 @@ public class Lane : MonoBehaviour {
 	void Start() {
 		carsOnLane = new LinkedList<Car>();
 		carsAtIntersection = new List<Car>();
-	}
-
-	void Update() {
-
 	}
 	
 	public override string ToString ()

@@ -43,8 +43,10 @@ public class Intersection : Connection {
 		List<PossibleTurn> list = new List<PossibleTurn>();
 		foreach(Road r1 in roads) {
 			if(r != r1) {
-				foreach(Lane l in r.InLanes(this)) {
-					list.Add (new PossibleTurn(l, r1.OutLanes(this)));
+				if(r1.OutLanes(this).Length > 0) {
+					foreach(Lane l in r.InLanes(this)) {
+						list.Add (new PossibleTurn(l, r1.OutLanes(this)));
+					}
 				}
 			}
 		}

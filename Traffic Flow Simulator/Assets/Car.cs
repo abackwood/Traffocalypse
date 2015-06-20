@@ -18,20 +18,13 @@ public class Car : MonoBehaviour
     public CarState state;
     public float speed;
 
-    Route route;
-    int route_index;
-    public ExplicitTurn NextTurn
-    {
-        get { return route[route_index]; }
-    }
-
-    CarAI ai;
+    public CarAI ai;
 
     // Use this for initialization
     void Start()
     {
         ai = new CarAI(this);
-        route_index = -1;
+        ai.route_index = -1;
 
         currentLane.Subscribe(this);
 
@@ -44,13 +37,6 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Some sort of pathfinding
-        if (route_index == -1)
-        {
-            RecomputeRoute();
-            //Debug.Log ("Final Route: " + route);
-        }
-
         if (IsAtDestination() && ReachedDestination != null)
         {
             ReachedDestination(this);
@@ -82,20 +68,21 @@ public class Car : MonoBehaviour
 
         if (intersection != null)
         {
-            float distanceToTurn = Vector3.Distance(transform.position, NextTurn.TurnPoint);
+            float distanceToTurn = Vector3.Distance(transform.position, ai.NextTurn.TurnPoint);
+			ExplicitTurn nextTurn = ai.NextTurn;
 
             //If a turn point will be reached special actions need to be taken
             if (movement.magnitude > distanceToTurn)
             {
-                Lane newLane = NextTurn.LaneOut;	//Find new lane
-                float newDistanceOnLane = Vector3.Distance(NextTurn.TurnPoint, newLane.startPoint);
+				Lane newLane = nextTurn.LaneOut;	//Find new lane
+				float newDistanceOnLane = Vector3.Distance(nextTurn.TurnPoint, newLane.startPoint);
 
                 //Move position and adjust car location internally
-                transform.position = NextTurn.TurnPoint;	//Drive to next turn
+				transform.position = nextTurn.TurnPoint;	//Drive to next turn
+				distanceOnLane = -newDistanceOnLane;		//You start somewhat behind the start of the lane
                 SwitchToLane(newLane);
-                distanceOnLane = -newDistanceOnLane;		//You start somewhat behind the start of the lane
 
-                route_index++;
+                ai.route_index++;
 
                 //Recalculate speed and movement
                 trueSpeed = movement.magnitude - distanceToTurn;	//Speed is now the rest after driving to the turn
@@ -111,83 +98,6 @@ public class Car : MonoBehaviour
         currentLane.Unsubcribe(this);
         currentLane = lane;
         currentLane.Subscribe(this);
-    }
-
-    //Recomputes route of the agent
-    //A queue of routes is kept. Then the first element is tested
-    //If this route ends in the destination this is the new route
-    //Otherwise all possible next turns are generated and the best lane chosen for new routes.
-    //These new routes are pushed at the end of the queue.
-    public void RecomputeRoute()
-    {
-        Connection nextNode = currentLane.to;
-        Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
-
-        while (routes.Count > 0)
-        {
-            Route route = routes.Dequeue();
-            if (route.EndPoint == destination)
-            {
-                this.route = route;
-                route_index = 0;
-                return;
-            }
-            else
-            {
-                ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
-                if (possibleNextTurns == null)
-                {
-                    continue;
-                }
-                foreach (PossibleTurn turn in possibleNextTurns)
-                {
-                    ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-                    Route new_route = new Route(route, bestTurn, ai);
-                    routes.Enqueue(new_route);
-                }
-            }
-        }
-        route_index = 0;
-    }
-
-    ICollection<Route> GenerateRoutesFromNextNode(Connection nextNode)
-    {
-        if (nextNode.GetType().Equals(typeof(SourceSink)))
-        {
-            return null;
-        }
-        else
-        {
-            List<Route> routes = new List<Route>();
-            Intersection intersection = (Intersection)nextNode;
-            foreach (PossibleTurn turn in intersection.PossibleTurns)
-            {
-                if (turn.LaneIn == currentLane)
-                {
-                    ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-                    Route new_route = new Route(bestTurn, ai);
-                    routes.Add(new_route);
-                }
-            }
-            return routes;
-        }
-    }
-
-    ExplicitTurn SelectBestExplicitTurn(PossibleTurn turn)
-    {
-        ExplicitTurn argmax = default(ExplicitTurn);
-        float value_max = float.MinValue;
-
-        for (int i = 0; i < turn.LanesOut.Length; i++)
-        {
-            float value = ai.EvaluateLane(turn.LanesOut[i]);
-            if (value > value_max)
-            {
-                argmax = new ExplicitTurn(turn, i);
-                value_max = value;
-            }
-        }
-        return argmax;
     }
 
     public void OnTriggerEnter2D(Collider2D col)

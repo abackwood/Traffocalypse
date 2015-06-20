@@ -38,6 +38,10 @@ public class CarSpawner : MonoBehaviour {
 
 			car.ReachedDestination += OnCarReachedDestination;
 
+			CarAI ai = new CarAI(car);
+			ai.baseline_anger = UnityEngine.Random.Range(0,1);
+			car.ai = ai;
+
 			cars.Add (car);
 
 			timeSinceSpawn = 0;

@@ -104,6 +104,8 @@ public class Road : MonoBehaviour {
 
 		lane.CalculateSpeedAndDirection(speedLimit);
 
+		lane.name = lane.ToString();
+
 		return lane;
 	}
 
