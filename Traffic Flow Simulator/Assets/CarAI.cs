@@ -38,7 +38,7 @@ public class CarAI {
 		if (route_index == -1)
 		{
 			RecomputeRoute();
-			Debug.Log ("Final Route: " + route);
+			//Debug.Log ("Final Route: " + route);
 		}
 
 		Intersection intersection = car.currentLane.to as Intersection;

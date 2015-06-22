@@ -3,28 +3,27 @@ using System.Collections;
 
 public class Collision : MonoBehaviour 
 {
-    public float towAwayTime = 5;
-    public GameObject tower;
+    public TowTruck towTruck;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start () 
+    {
+        GameObject obj = GameObject.Find("Canvas/TowAwayText");
+        towTruck = obj.GetComponent<TowTruck>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 		
 	}
 
     void OnMouseDown()
     {
-        Invoke("TowAway", towAwayTime);
-        GameObject tower = GameObject.Find("TowAwayText");
-        GUIText text = tower.GetComponent<GUIText>();
-        text.text = "Car currently being towed: yes";
+        towTruck.StartTowing(this);
     }
 
-    void TowAway()
+    public void Remove()
     {
         Destroy(gameObject);
     }
