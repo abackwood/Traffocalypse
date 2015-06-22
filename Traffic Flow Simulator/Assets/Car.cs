@@ -107,6 +107,8 @@ public class Car : MonoBehaviour
         if (carScript != null)
             if (carScript.distanceOnLane > distanceOnLane)
                 Instantiate(collision, transform.position, Quaternion.identity);
+        currentLane.Unsubcribe(this);
+        currentLane.UnsubscribeFromQ(this);
         Destroy(gameObject);
     }
 }
