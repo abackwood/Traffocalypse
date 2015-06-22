@@ -637,7 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
   carsToSpawn: 50
-  cooldown: .100000001
+  cooldown: 2
 --- !u!4 &1411564577
 Transform:
   m_ObjectHideFlags: 0

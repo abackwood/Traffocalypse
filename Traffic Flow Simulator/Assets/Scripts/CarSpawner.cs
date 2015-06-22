@@ -32,7 +32,7 @@ public class CarSpawner : MonoBehaviour {
 				Lane[] possibleLanes = car.source.road.OutLanes(car.source);
 				lane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
 			}
-			while (car.source == car.destination || lane.IsBlocked());
+			while (car.source == car.destination /*|| lane.IsBlocked()*/);
 
 			car.currentLane = lane;
 			car.currentLane.Subscribe(car);
