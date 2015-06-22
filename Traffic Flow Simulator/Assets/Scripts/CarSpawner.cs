@@ -24,15 +24,18 @@ public class CarSpawner : MonoBehaviour {
 			SourceSink[] sinks = SourceSink.Sinks;
 
 			Car car = GameObject.Instantiate(template);
+			Lane lane;
 
 			do {
 				car.source = sources[UnityEngine.Random.Range(0,sources.Length)];
 				car.destination = sinks[UnityEngine.Random.Range (0,sinks.Length)];
+				Lane[] possibleLanes = car.source.road.OutLanes(car.source);
+				lane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
 			}
-			while (car.source == car.destination);
+			while (car.source == car.destination || lane.IsBlocked());
 
-			Lane[] possibleLanes = car.source.road.OutLanes(car.source);
-			car.currentLane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
+			car.currentLane = lane;
+			car.currentLane.Subscribe(car);
 			car.distanceOnLane = 0;
 			car.transform.position = car.currentLane.startPoint;
 
