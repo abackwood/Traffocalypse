@@ -212,6 +212,7 @@ GameObject:
   - 92: {fileID: 523311276}
   - 124: {fileID: 523311275}
   - 81: {fileID: 523311274}
+  - 114: {fileID: 523311279}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -260,7 +261,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
+<<<<<<< HEAD
   orthographic size: 50
+=======
+  orthographic size: 150
+>>>>>>> b107f0aa726a112c79861d67b34fb832f08d134b
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -283,6 +288,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 10
 --- !u!1001 &624885103
 Prefab:
@@ -348,6 +354,25 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 624885103}
   m_Script: {fileID: 11500000, guid: d07968c3923a12b41a57e33e025975d0, type: 3}
+=======
+  m_RootOrder: 7
+--- !u!114 &523311279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523311273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9443cb3e8383ee54a965d637cae87395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  min: -50
+  max: 50
+  scrollSpeed: 10
+  moveDistance: 10
+  moveSpeed: 5
+>>>>>>> b107f0aa726a112c79861d67b34fb832f08d134b
 --- !u!1001 &684112361
 Prefab:
   m_ObjectHideFlags: 0
@@ -442,9 +467,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 822612660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e198ec6eb07242f46b461a6f87828804, type: 3}
+  m_Script: {fileID: 11500000, guid: be613a7b7791b4746b1bdbe80c86ab1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towAwayTime: 5
+  textObject: {fileID: 0}
+  currentCollision: {fileID: 0}
 --- !u!114 &822612662
 MonoBehaviour:
   m_ObjectHideFlags: 0

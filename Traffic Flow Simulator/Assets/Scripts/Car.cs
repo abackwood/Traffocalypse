@@ -44,10 +44,6 @@ public class Car : MonoBehaviour
 
         ai.Update();
         Move();
-        //	Collision prevention
-        //	Set speed
-        //	Move down lane
-        //	Turn at intersections
     }
 
     bool IsAtDestination()
@@ -102,12 +98,14 @@ public class Car : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        //GameObject car = col.gameObject;
-        //Car carScript = col.GetComponent<Car>();
-        //if (carScript != null)
-        //    if (carScript.distanceOnLane > distanceOnLane)
-        //        Instantiate(collision, transform.position, Quaternion.identity);
-        //Destroy(gameObject);
+        GameObject car = col.gameObject;
+        Car carScript = col.GetComponent<Car>();
+        if (carScript != null)
+            if (carScript.distanceOnLane > distanceOnLane)
+                Instantiate(collision, transform.position, Quaternion.identity);
+        currentLane.Unsubcribe(this);
+        currentLane.UnsubscribeFromQ(this);
+        Destroy(gameObject);
     }
 }
 

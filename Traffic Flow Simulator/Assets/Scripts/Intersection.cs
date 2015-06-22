@@ -30,7 +30,7 @@ public class Intersection : Connection {
 			}
 			s += "]) ";
 		}
-		Debug.Log (s);
+		//Debug.Log (s);
 	}
 
 	/// <summary>
