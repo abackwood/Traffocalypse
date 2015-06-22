@@ -86,6 +86,10 @@ public class Lane : MonoBehaviour {
 		carsAtIntersection.Remove (car);
 	}
 
+	public bool IsBlocked() {
+		return carsOnLane.Count > 0 && carsOnLane.Last.Value.distanceOnLane < 10;
+	}
+
 	void Start() {
 		carsOnLane = new LinkedList<Car>();
 		carsAtIntersection = new List<Car>();
