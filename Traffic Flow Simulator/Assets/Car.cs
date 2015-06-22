@@ -15,10 +15,14 @@ public class Car : MonoBehaviour
     public float distanceOnLane;
     public Car nextCar;
 
+    public float angerState;
+
     public CarState state;
     public float speed;
 
     public CarAI ai;
+
+    SpriteRenderer renderer;
 
     // Use this for initialization
     void Start()
@@ -32,6 +36,8 @@ public class Car : MonoBehaviour
         {
             Spawned(this);
         }
+
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -42,12 +48,17 @@ public class Car : MonoBehaviour
             ReachedDestination(this);
         }
 
+        angerState = AngerState;
+
         ai.Update();
         Move();
         //	Collision prevention
         //	Set speed
         //	Move down lane
         //	Turn at intersections
+
+        //Changes to color from red to green depending on the anger state
+        renderer.color = new Color(angerState, (1-angerState), 0);
     }
 
     bool IsAtDestination()
@@ -108,6 +119,11 @@ public class Car : MonoBehaviour
         //    if (carScript.distanceOnLane > distanceOnLane)
         //        Instantiate(collision, transform.position, Quaternion.identity);
         //Destroy(gameObject);
+    }
+
+    public float AngerState
+    {
+        get { return ai.anger_state; }
     }
 }
 

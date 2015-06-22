@@ -1,4 +1,5 @@
-using UnityEngine;
+
+ using UnityEngine;
 using System.Collections.Generic;
 
 public class CarAI {
@@ -18,6 +19,10 @@ public class CarAI {
 
 	//Personality
 	public float baseline_anger;
+    public float desired_speed_mod;
+
+    //Emotion
+    public float anger_state;
 
 	//Evaluation methods
 	public float EvaluateRoad(Road road) {
@@ -59,7 +64,8 @@ public class CarAI {
 		}
 
 		else if(car.state == CarState.DRIVING || car.state == CarState.ON_INTERSECTION) {
-			car.speed = car.currentLane.speedLimit;
+            //Speed changes depending on anger state from 0.75x to 1.5x the speedlimit
+            car.speed = car.currentLane.speedLimit * (anger_state * 0.75f + 0.75f);
 
 			//If behind another car, avoid collision by matching speed and queue up behind them if applicable
 			if(car.nextCar != null) {
@@ -85,6 +91,12 @@ public class CarAI {
 			   car.distanceOnLane > 0 && car.distanceOnLane < car.currentLane.length) {
 				car.state = CarState.DRIVING;
 			}
+
+            //Get mad when driving below desired speed, get calm when driving on or faster
+            if (car.speed < car.currentLane.speedLimit * desired_speed_mod)
+                anger_state += 0.001f;
+            else
+                anger_state -= 0.001f;
 		}
 	}
 
@@ -112,6 +124,11 @@ public class CarAI {
 
 	void KeepDistanceFromNextCar(float distance) {
 		float targetDistance = Mathf.Max(MINIMUM_DISTANCE_TO_NEXT_CAR, car.speed * TARGET_SECONDS_TO_NEXT_CAR);
+
+        //If more angry than 50% target distance to next car will shrink up to half its original size
+        if (anger_state > 0.5f)
+            targetDistance = targetDistance / (2 * anger_state);
+
 		if(distance < targetDistance) {
 			car.speed = Mathf.Max(0, car.nextCar.speed - SLOWDOWN_MARGIN);
 			if(car.nextCar.state == CarState.QUEUED) {
@@ -210,5 +227,7 @@ public class CarAI {
 
 	public CarAI(Car car) {
 		this.car = car;
+        this.anger_state = UnityEngine.Random.Range(0,101) * 0.01f; //Needs to be set to base line anger
+        this.desired_speed_mod = this.anger_state / 2 + 0.75f; //Depends on the base line anger
 	}
 }
