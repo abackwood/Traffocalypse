@@ -44,10 +44,6 @@ public class Car : MonoBehaviour
 
         ai.Update();
         Move();
-        //	Collision prevention
-        //	Set speed
-        //	Move down lane
-        //	Turn at intersections
     }
 
     bool IsAtDestination()
