@@ -72,7 +72,9 @@ public class CarAI {
 			//If you are the front car and you've reached the intersection, respond to the red or green light
 			else if(car.state == CarState.DRIVING &&
 			        ReachedIntersection(intersection)) {
+
 				if(intersection.IsOpen(NextTurn.Parent)) {
+
 					OnLightGreen(intersection);
 				}
 				else {

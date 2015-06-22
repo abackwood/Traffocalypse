@@ -19,8 +19,8 @@ public class Intersection : Connection {
 		}
 		PossibleTurns = list.ToArray();
 
-		OpenTurns = new List<PossibleTurn>(PossibleTurns);
-		//OpenTurns = new List<PossibleTurn>();
+
+		OpenTurns = new List<PossibleTurn>();
 
 		string s = name + " possible turns: ";
 		foreach(PossibleTurn pt in PossibleTurns) {
@@ -55,15 +55,19 @@ public class Intersection : Connection {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	public bool IsOpen(PossibleTurn turn) {
-		return OpenTurns.Contains(turn);
+		return OpenTurns.Contains (turn);
+	}
+
+	public void SetOpen(List<PossibleTurn> turns){
+		OpenTurns = turns;
 	}
 }
 
-public struct PossibleTurn {
+public class PossibleTurn {
 	Lane laneIn;
 	public Lane LaneIn {
 		get { return laneIn; }
@@ -117,6 +121,36 @@ public struct PossibleTurn {
 			(B2*C1 - B1*C2) / delta,
 			(A1*C2 - A2*C1) / delta);
 	}
+
+	// This is where most of my evens went lost - U
+	public override bool Equals(System.Object obj){
+
+		if (obj == null)
+		{
+			return false;
+		}
+
+		PossibleTurn a = obj as PossibleTurn;
+
+		if (laneIn == a.laneIn) {
+			foreach(Lane l in lanesOut){
+				foreach(Lane m in a.lanesOut){
+					if(l == m)
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	/*
+	public static bool operator ==(PossibleTurn a, PossibleTurn b){
+		return a.Equals (b);
+	}
+	public static bool operator !=(PossibleTurn a, PossibleTurn b){
+		return !(a == b);
+	}*/
 }
 
 public struct ExplicitTurn {
