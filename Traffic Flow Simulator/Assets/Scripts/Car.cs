@@ -123,6 +123,11 @@ public class Car : MonoBehaviour
     {
         get { return ai.anger_state; }
     }
+
+	public override bool Equals (object o)
+	{
+		return this == o;
+	}
 }
 
 public enum CarState

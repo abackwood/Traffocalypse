@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class CarAI {
 	public static readonly float WAIT_MARGIN = 5;
-	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 1;
-	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 1;
+	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 5;
+	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 2;
 	public static readonly float SLOWDOWN_MARGIN = 2;
 
 	//Necessary fields
@@ -57,6 +57,9 @@ public class CarAI {
 				}
 			}
 			else {
+				if(car.nextCar.distanceOnLane - car.distanceOnLane > MINIMUM_DISTANCE_TO_NEXT_CAR) {
+					car.speed = 0.5f * car.currentLane.speedLimit;
+				}
 				if(car.nextCar.state == CarState.DRIVING) {
 					OnCarInFrontStartedDriving();
 				}
@@ -69,9 +72,7 @@ public class CarAI {
 
 			//If behind another car, avoid collision by matching speed and queue up behind them if applicable
 			if(car.nextCar != null) {
-				Car nextCar = car.nextCar;
-
-				float distanceToNextCar = (nextCar.distanceOnLane - car.distanceOnLane);
+				float distanceToNextCar = (car.nextCar.distanceOnLane - car.distanceOnLane);
 				KeepDistanceFromNextCar(distanceToNextCar);
 			}
 
@@ -80,7 +81,6 @@ public class CarAI {
 			        ReachedIntersection(intersection)) {
 
 				if(intersection.IsOpen(NextTurn.Parent)) {
-
 					OnLightGreen(intersection);
 				}
 				else {
@@ -104,8 +104,7 @@ public class CarAI {
 
 	bool ReachedIntersection(Intersection intersection) {
 		return intersection != null &&
-				car.currentLane.length - car.distanceOnLane < WAIT_MARGIN &&
-				!intersection.IsOpen(NextTurn.Parent);
+			   car.currentLane.length - car.distanceOnLane < WAIT_MARGIN;
 	}
 
 	void OnLightRed(Intersection intersection) {
@@ -128,8 +127,9 @@ public class CarAI {
 		float targetDistance = Mathf.Max(MINIMUM_DISTANCE_TO_NEXT_CAR, car.speed * TARGET_SECONDS_TO_NEXT_CAR);
 
         //If more angry than 50% target distance to next car will shrink up to half its original size
-        if (anger_state > 0.5f)
-            targetDistance = targetDistance / (2 * anger_state);
+        if (anger_state > 0.5f) {
+			targetDistance = targetDistance / (2.0f * anger_state);
+		}
 
 		if(distance < targetDistance) {
 			car.speed = Mathf.Max(0, car.nextCar.speed - SLOWDOWN_MARGIN);

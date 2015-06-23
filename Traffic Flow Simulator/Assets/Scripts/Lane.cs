@@ -47,10 +47,12 @@ public class Lane : MonoBehaviour {
 	/// <param name="car">The subscribing car.</param>
 	public void Subscribe(Car car)
 	{
-		if(carsOnLane.Count > 0) {
-			car.nextCar = carsOnLane.Last.Value;
+		if(!carsOnLane.Contains(car)) {
+			if(carsOnLane.Count > 0) {
+				car.nextCar = carsOnLane.Last.Value;
+			}
+			carsOnLane.AddLast(car);
 		}
-		carsOnLane.AddLast(car);
 	}
 
 	/// <summary>

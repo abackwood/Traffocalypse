@@ -29,10 +29,23 @@ public class CarSpawner : MonoBehaviour {
 			do {
 				car.source = sources[UnityEngine.Random.Range(0,sources.Length)];
 				car.destination = sinks[UnityEngine.Random.Range (0,sinks.Length)];
-				Lane[] possibleLanes = car.source.road.OutLanes(car.source);
-				lane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
+			} while(car.source == car.destination);
+
+			CarAI ai = new CarAI(car);
+			ai.baseline_anger = UnityEngine.Random.Range(0,1);
+			car.ai = ai;
+
+			Lane[] possibleLanes = car.source.road.OutLanes(car.source);
+			lane = possibleLanes[0];
+			foreach(Lane lane1 in possibleLanes) {
+				if(ai.EvaluateLane(lane1,lane1) > ai.EvaluateLane(lane,lane)) {
+					lane = lane1;
+				}
 			}
-			while (car.source == car.destination /*|| lane.IsBlocked()*/);
+			if (lane.IsBlocked()) {
+				GameObject.Destroy(car.gameObject);
+				return;
+			}
 
 			car.currentLane = lane;
 			car.currentLane.Subscribe(car);
@@ -40,10 +53,6 @@ public class CarSpawner : MonoBehaviour {
 			car.transform.position = car.currentLane.startPoint;
 
 			car.ReachedDestination += OnCarReachedDestination;
-
-			CarAI ai = new CarAI(car);
-			ai.baseline_anger = UnityEngine.Random.Range(0,1);
-			car.ai = ai;
 
 			cars.Add (car);
 
@@ -53,6 +62,7 @@ public class CarSpawner : MonoBehaviour {
 
 	void OnCarReachedDestination(Car car) {
 		cars.Remove (car);
+		car.currentLane.Unsubcribe(car);
 		GameObject.Destroy(car.gameObject);
 	}
 }

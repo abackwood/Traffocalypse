@@ -260,7 +260,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 50
+  orthographic size: 150
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -491,7 +491,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -320, y: 240}
+  m_AnchoredPosition: {x: -182, y: 209}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &980306447 stripped
@@ -549,6 +549,10 @@ Prefab:
       objectReference: {fileID: 4416513}
     - target: {fileID: 11442860, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
       propertyPath: sink
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442860, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
+      propertyPath: source
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -637,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
   carsToSpawn: 50
-  cooldown: 2
+  cooldown: 1
 --- !u!4 &1411564577
 Transform:
   m_ObjectHideFlags: 0
@@ -1024,7 +1028,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443968, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11485220, guid: 82dad2362745e83488d322eceb72cccb, type: 2}
       propertyPath: road
