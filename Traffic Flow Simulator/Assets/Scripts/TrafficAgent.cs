@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class TrafficAgent : MonoBehaviour {
 	public Intersection intersection;
-	public int status; // TODO integrate in the intersection structure
-	private float greenTime = 4;
+	public int status;
+	private float TotalGreenTime = 10;
+
 	public float timeSpan; // TODO is assigned depending on priority
 	public List<Lane> lanes; //
 	public Slider sliderPrefab;
@@ -14,11 +15,16 @@ public class TrafficAgent : MonoBehaviour {
 	// TODO a better way to position the slider set
 	public Vector3 initSliderPos = new Vector3(10, 10, 0);
 	public IntersectionModel intmodel;
+	public Priority priority;
+	private bool coolDown;
+	private float coolDownTime = 1;
 	
 
 	// Use this for initialization
 	void Start () {
 		intmodel = new IntersectionModel (intersection);
+		priority = new Priority (intmodel);
+		coolDown = false;
 
 		//TODO redo completely with the new thing in mind
 		/*int y = 0;
@@ -33,35 +39,75 @@ public class TrafficAgent : MonoBehaviour {
 			}
 		}*/
 		status = 0;
-		timeSpan = greenTime;
+		timeSpan = TotalGreenTime * priority.priorityList[0];
 	}
-	
-	// TODO priority needs to be updated once all the phases of an intersection type have been
-	// executed, so after a whole cycle. Update checks whether the current phase has reached
-	// completion and, if so, moves to the following. At the end of the cycle, an even is triggered
-	// which updates the priority. BEWARE, handle empty lanes smartly
+
 	void Update () {
 		timeSpan -= Time.deltaTime;
 		if (timeSpan < 0) {
+			if(coolDown){
 
-			timeSpan = greenTime;
+				priority.Update();
+				
+				status = (status + 1)%intmodel.phasesNumber;
+				timeSpan = TotalGreenTime * priority.priorityList[status];
+				
+				intersection.SetOpen(intmodel.phases[status]);
+			}
+			else
+			{
+				timeSpan = coolDownTime;
+				intersection.SetOpen(new List<PossibleTurn>());
+				
+			}
+			coolDown = !coolDown;
 
-			status = (status + 1)%intmodel.phasesNumber;
-
-			intersection.SetOpen(intmodel.phases[status]);
 		}
 
 		
 	}
 
 	// TODO priority structure
-	// first Longest-Q fixed time
-	// second Longest-Q proportional time
+	// first Longest-Q fixed time ---> stupid
+	// second Longest-Q proportional time ---> done
 	// third JTA :')
 
-	private struct Priority{
+	public struct Priority{
+		public List<float> priorityList;
+		private IntersectionModel intmodel;
 
+		public Priority(IntersectionModel intmodel){
+			this.intmodel = intmodel;
 
+			priorityList = new List<float>();
+
+			for(int i = 0; i < intmodel.phasesNumber; i++){
+				priorityList.Add(1/intmodel.phasesNumber);
+			}
+		}
+
+		public void Update(){
+			List<int> currentQs = intmodel.getQsLength ();
+			Debug.Log ("Printing current priority values: ");
+			// currentWs.Sum() should be there, but isn't
+			int totalLength = 0;
+			foreach (int i in currentQs) {
+				totalLength += i;
+			}
+			Debug.Log("Total length: " + totalLength.ToString());
+			if (totalLength > 0) {
+				for(int i = 0; i < priorityList.Count; i++){
+					priorityList[i] = (float)currentQs[i]/totalLength;
+					Debug.Log("CurrentQ " + i.ToString() + ": " + currentQs[i].ToString());
+					Debug.Log (((float)currentQs[i]/totalLength).ToString ());
+				}
+			} else {
+				for(int i = 0; i < priorityList.Count; i++){
+					priorityList[i] = 1f/intmodel.phasesNumber;
+				}
+			}
+
+		}
 	}
 
 	public struct IntersectionModel{
@@ -133,19 +179,15 @@ public class TrafficAgent : MonoBehaviour {
 			else{
 				foreach(Road r in intersection.roads){
 					List<PossibleTurn> ls = new List<PossibleTurn>();
-					string debg = "Lane: ";
 					foreach(Lane l in r.InLanes(intersection)){
-						debg += l.ToString () + " to lanes:";
 						foreach(Road s in intersection.roads){
 							if (r != s){
 								ls.Add (new PossibleTurn (l, s.OutLanes(intersection)));
 								foreach(Lane m in s.OutLanes(intersection)){
-									debg += " "+m.ToString();
 								}
 							}
 						}
 					}
-					Debug.Log(debg);
 					if(ls.Count>0)
 						this.phases.Add(ls);
 				}
@@ -154,6 +196,18 @@ public class TrafficAgent : MonoBehaviour {
 			this.phasesNumber = this.phases.Count;
 		}
 
+		public List<int> getQsLength(){
+			List<int> QsLength = new List<int> ();
+
+			foreach (List<PossibleTurn> p in phases) {
+				int thisLength = 0;
+				foreach(PossibleTurn q in p){
+					thisLength += q.LaneIn.GetCarsAtIntersection();
+				}
+				QsLength.Add(thisLength);
+			}
+			return QsLength;
+		}
 	
 
 	}

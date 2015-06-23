@@ -85,7 +85,9 @@ public class Lane : MonoBehaviour {
 	/// <param name="car">Car.</param>
 	public void UnsubscribeFromQ(Car car)
 	{
-		carsAtIntersection.Remove (car);
+		if (carsAtIntersection.Contains(car)){
+			carsAtIntersection.Remove (car);
+		}
 	}
 
 	public bool IsBlocked() {
@@ -95,6 +97,10 @@ public class Lane : MonoBehaviour {
 	void Start() {
 		carsOnLane = new LinkedList<Car>();
 		carsAtIntersection = new List<Car>();
+	}
+
+	public int GetCarsAtIntersection(){
+		return carsAtIntersection.Count;
 	}
 	
 	public override string ToString ()
