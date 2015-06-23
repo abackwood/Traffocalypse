@@ -7,6 +7,7 @@ public class CarAI {
 	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 5;
 	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 2;
 	public static readonly float SLOWDOWN_MARGIN = 2;
+    public static readonly float ANGER_DECAY_INIT = 10;
 
 	//Necessary fields
 	Car car;
@@ -20,9 +21,11 @@ public class CarAI {
 	//Personality
 	public float baseline_anger;
     public float desired_speed_mod;
+    public float anger_temper;
 
     //Emotion
     public float anger_state;
+    public float anger_decay;
 
 	//Evaluation methods
 	public float EvaluateRoad(Road road) {
@@ -94,12 +97,16 @@ public class CarAI {
 				car.state = CarState.DRIVING;
 			}
 
-            //Get mad when driving below desired speed, get calm when driving on or faster
-            if (car.speed < car.currentLane.speedLimit * desired_speed_mod)
-                anger_state += 0.001f;
-            else
-                anger_state -= 0.001f;
+            float desired_speed = car.currentLane.speedLimit * desired_speed_mod;
+            //Get mad when driving below desired speed, depending on the amount below speed
+            if (car.speed < desired_speed /*&& car.state == CarState.DRIVING*/)
+                anger_state += 0.0001f * ((desired_speed - car.speed) / desired_speed) * anger_temper;
 		}
+
+        //Decaying of the anger depending on both the decay factor and temper factor
+        anger_state -= 0.0001f * (anger_decay / anger_temper);
+        //Decaying of the decay of anger to imitate building irritability on longer drives
+        anger_decay -= 0.01f;
 	}
 
 	bool ReachedIntersection(Intersection intersection) {
@@ -231,5 +238,7 @@ public class CarAI {
 		this.car = car;
         this.anger_state = UnityEngine.Random.Range(0,101) * 0.01f; //Needs to be set to base line anger
         this.desired_speed_mod = this.anger_state / 2 + 0.75f; //Depends on the base line anger
+        this.anger_temper = UnityEngine.Random.Range(1, 11); //Needs to be given in the spawner
+        this.anger_decay = ANGER_DECAY_INIT;
 	}
 }
