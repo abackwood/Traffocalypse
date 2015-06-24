@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Collision : MonoBehaviour 
+public class Collision : Car
 {
     public TowTruck towTruck;
 
-	// Use this for initialization
 	void Start () 
     {
         GameObject obj = GameObject.Find("Canvas/TowAwayText");
         towTruck = obj.GetComponent<TowTruck>();
 	}
 	
-	// Update is called once per frame
 	void Update () 
     {
 		
 	}
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+    }
 
     void OnMouseDown()
     {

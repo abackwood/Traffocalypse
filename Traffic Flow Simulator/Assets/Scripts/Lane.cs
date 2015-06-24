@@ -70,6 +70,16 @@ public class Lane : MonoBehaviour {
 		}
 	}
 
+    public void ReplaceCar(Car car, Collision collision)
+    {
+        LinkedListNode<Car> node = carsOnLane.Find (car);
+        if (node != null)
+        {
+            node.Value = collision;
+            Debug.Log(node.Value);
+        }
+    }
+
 	/// <summary>
 	/// Subscribes a car to the queue at the end of the lane.
 	/// </summary>
