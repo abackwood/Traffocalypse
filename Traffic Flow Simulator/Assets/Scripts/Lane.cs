@@ -76,7 +76,6 @@ public class Lane : MonoBehaviour {
         if (node != null)
         {
             node.Value = collision;
-            Debug.Log(node.Value);
         }
     }
 

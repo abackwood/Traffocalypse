@@ -112,12 +112,13 @@ public class Car : MonoBehaviour
         GameObject car = col.gameObject;
         Car carScript = col.GetComponent<Car>();
         if (carScript != null)
-            if (carScript.distanceOnLane > distanceOnLane)
+            if (carScript.distanceOnLane < distanceOnLane)
             {
                 Transform collisionObject = Instantiate(collision, transform.position, Quaternion.identity) as Transform;
                 Collision collisionScript = collisionObject.GetComponent<Collision>();
                 currentLane.ReplaceCar(this, collisionScript);
                 collisionScript.distanceOnLane = distanceOnLane;
+                collisionScript.currentLane = currentLane;
             }
         currentLane.Unsubcribe(this);
         currentLane.UnsubscribeFromQ(this);

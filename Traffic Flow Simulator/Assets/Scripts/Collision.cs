@@ -27,6 +27,7 @@ public class Collision : Car
 
     public void Remove()
     {
+        currentLane.Unsubcribe(this);
         Destroy(gameObject);
     }
 }
