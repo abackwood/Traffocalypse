@@ -36,12 +36,8 @@ public class CarSpawner : MonoBehaviour {
 			car.ai = ai;
 
 			Lane[] possibleLanes = car.source.road.OutLanes(car.source);
-			lane = possibleLanes[0];
-			foreach(Lane lane1 in possibleLanes) {
-				if(ai.EvaluateLane(lane1,lane1) > ai.EvaluateLane(lane,lane)) {
-					lane = lane1;
-				}
-			}
+			lane = possibleLanes[UnityEngine.Random.Range(0,possibleLanes.Length)];
+
 			if (lane.IsBlocked()) {
 				GameObject.Destroy(car.gameObject);
 				return;

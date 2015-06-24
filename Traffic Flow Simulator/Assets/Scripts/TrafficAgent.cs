@@ -88,18 +88,18 @@ public class TrafficAgent : MonoBehaviour {
 
 		public void Update(){
 			List<int> currentQs = intmodel.getQsLength ();
-			Debug.Log ("Printing current priority values: ");
+			//Debug.Log ("Printing current priority values: ");
 			// currentWs.Sum() should be there, but isn't
 			int totalLength = 0;
 			foreach (int i in currentQs) {
 				totalLength += i;
 			}
-			Debug.Log("Total length: " + totalLength.ToString());
+			//Debug.Log("Total length: " + totalLength.ToString());
 			if (totalLength > 0) {
 				for(int i = 0; i < priorityList.Count; i++){
 					priorityList[i] = (float)currentQs[i]/totalLength;
 					Debug.Log("CurrentQ " + i.ToString() + ": " + currentQs[i].ToString());
-					Debug.Log (((float)currentQs[i]/totalLength).ToString ());
+					//Debug.Log (((float)currentQs[i]/totalLength).ToString ());
 				}
 			} else {
 				for(int i = 0; i < priorityList.Count; i++){

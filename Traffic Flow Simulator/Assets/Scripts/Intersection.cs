@@ -122,7 +122,6 @@ public class PossibleTurn {
 			(A1*C2 - A2*C1) / delta);
 	}
 
-	// This is where most of my evens went lost - U
 	public override bool Equals(System.Object obj){
 
 		if (obj == null)
@@ -182,4 +181,4 @@ public struct ExplicitTurn {
 	{
 		return "(" + LaneIn + " -(" + TurnPoint + ")->" + LaneOut + ")";
 	}
-}
+}//

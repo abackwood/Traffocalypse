@@ -42,10 +42,10 @@ MonoBehaviour:
   from: {fileID: 0}
   to: {fileID: 0}
   oneWay: 0
-  lanes: 4
+  lanes: 2
   laneTemplate: {fileID: 11440692, guid: bc63d7d8d3542a648a3bc816978eacb2, type: 2}
-  laneMargin: 10
-  laneSpacing: 3
+  laneMargin: 15
+  laneSpacing: 4
   speedLimit: 20
 --- !u!1001 &100100000
 Prefab:

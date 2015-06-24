@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intersection: {fileID: 0}
   status: 0
-  timeSpan: 0
+  timeSpan: 1
   lanes: []
   sliderPrefab: {fileID: 11429114, guid: b99cac8539ac3b34caee25d542872e45, type: 2}
   sliders: []

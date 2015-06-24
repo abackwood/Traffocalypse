@@ -1,10 +1,9 @@
-
- using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class CarAI {
-	public static readonly float WAIT_MARGIN = 5;
-	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 5;
+	public static readonly float WAIT_MARGIN = 3;
+	public static readonly float MINIMUM_DISTANCE_TO_NEXT_CAR = 7;
 	public static readonly float TARGET_SECONDS_TO_NEXT_CAR = 2;
 	public static readonly float SLOWDOWN_MARGIN = 2;
     public static readonly float ANGER_DECAY_INIT = 10;
@@ -13,10 +12,7 @@ public class CarAI {
 	Car car;
 	public Route route;
 	public int route_index;
-	public ExplicitTurn NextTurn
-	{
-		get { return route[route_index]; }
-	}
+	public ExplicitTurn nextTurn;
 
 	//Personality
 	public float baseline_anger;
@@ -32,21 +28,14 @@ public class CarAI {
 		return 1;
 	}
 
-	public float EvaluateLane(Lane currentLane, Lane lane) {
-		float density = lane.CarsOnLane.Count / lane.length;
-		float density_score = -density;
-		float closeness_score = -Vector3.Distance(currentLane.endPoint, lane.startPoint);
-
-		return 10 * density_score + closeness_score;
-	}
-
 	//Update behaviour
 	public void Update() {
-		//Reclacualte route if necesssary
 		if (route_index == -1)
 		{
 			RecomputeRoute();
-			//Debug.Log ("Final Route: " + route);
+			route_index = 0;
+			Debug.Log ("Final Route: " + route);
+			SelectNextTurn();
 		}
 
 		Intersection intersection = car.currentLane.to as Intersection;
@@ -54,7 +43,7 @@ public class CarAI {
 		if(car.state == CarState.QUEUED) {
 			car.speed = 0;
 			if(car.nextCar == null) {
-				bool allowedToDrive = intersection.IsOpen(NextTurn.Parent);
+				bool allowedToDrive = intersection.IsOpen(nextTurn.Parent);
 				if(allowedToDrive) {
 					OnLightTurnedGreen(intersection);
 				}
@@ -82,8 +71,8 @@ public class CarAI {
 			//If you are the front car and you've reached the intersection, respond to the red or green light
 			else if(car.state == CarState.DRIVING &&
 			        ReachedIntersection(intersection)) {
-
-				if(intersection.IsOpen(NextTurn.Parent)) {
+				OnReachedIntersection(intersection);
+				if(intersection.IsOpen(nextTurn.Parent)) {
 					OnLightGreen(intersection);
 				}
 				else {
@@ -91,9 +80,14 @@ public class CarAI {
 				}
 			}
 
+			if(car.state == CarState.DRIVING &&
+			   (car.distanceOnLane < 0 || car.distanceOnLane > car.currentLane.length - WAIT_MARGIN)) {
+				car.state = CarState.ON_INTERSECTION;
+			}
+
 			//Detect when no longer on intersection
 			if(car.state == CarState.ON_INTERSECTION &&
-			   car.distanceOnLane > 0 && car.distanceOnLane < car.currentLane.length) {
+			   car.distanceOnLane > 0 && car.distanceOnLane < car.currentLane.length - WAIT_MARGIN) {
 				car.state = CarState.DRIVING;
 			}
 
@@ -114,6 +108,9 @@ public class CarAI {
 			   car.currentLane.length - car.distanceOnLane < WAIT_MARGIN;
 	}
 
+	void OnReachedIntersection(Intersection intersection) {
+		SelectNextTurn();
+	}
 	void OnLightRed(Intersection intersection) {
 		Queue();
 	}
@@ -152,7 +149,6 @@ public class CarAI {
 	}
 	void StartDriving() {
 		car.currentLane.UnsubscribeFromQ(car);
-		car.state = CarState.ON_INTERSECTION;
 	}
 
 	//Pathfinding
@@ -164,74 +160,100 @@ public class CarAI {
 	//These new routes are pushed at the end of the queue.
 	public void RecomputeRoute()
 	{
-		Connection nextNode = car.currentLane.to;
-		Queue<Route> routes = new Queue<Route>(GenerateRoutesFromNextNode(nextNode));
+		Queue<Route> routes = new Queue<Route>();
+		Route start = new Route(car.currentLane.road, car.currentLane.to);
+		routes.Enqueue(start);
 		
-		while (routes.Count > 0)
-		{
+		while (routes.Count > 0){
 			Route route = routes.Dequeue();
-			if (route.EndPoint == car.destination)
-			{
+			if (route.EndPoint == car.destination) {
 				this.route = route;
-				route_index = 0;
 				return;
 			}
-			else
-			{
-				ICollection<PossibleTurn> possibleNextTurns = route.PossibleNextTurns;
-				if (possibleNextTurns == null)
-				{
-					continue;
-				}
-				foreach (PossibleTurn turn in possibleNextTurns)
-				{
-					ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-					Route new_route = new Route(route, bestTurn, this);
-					routes.Enqueue(new_route);
+			else {
+				ICollection<Route> nextRoutes = route.PossibleNextRoutes;
+				if (nextRoutes != null) {
+					foreach (Route nextRoute in nextRoutes) {
+						routes.Enqueue(nextRoute);
+					}
 				}
 			}
 		}
 		route_index = 0;
 	}
 	
-	ICollection<Route> GenerateRoutesFromNextNode(Connection nextNode)
+	public void SelectNextTurn()
 	{
-		if (nextNode.GetType().Equals(typeof(SourceSink)))
+		Intersection intersection = car.currentLane.to as Intersection;
+		Road nextRoad = route[route_index + 1];
+
+		//Find appropriate possible turn
+		PossibleTurn possibleTurn = default(PossibleTurn);
+		foreach (PossibleTurn turn in intersection.PossibleTurns)
 		{
-			return null;
-		}
-		else
-		{
-			List<Route> routes = new List<Route>();
-			Intersection intersection = (Intersection)nextNode;
-			foreach (PossibleTurn turn in intersection.PossibleTurns)
-			{
-				if (turn.LaneIn == car.currentLane)
-				{
-					ExplicitTurn bestTurn = SelectBestExplicitTurn(turn);
-					Route new_route = new Route(bestTurn, this);
-					routes.Add(new_route);
-				}
+			if(turn.LaneIn == car.currentLane && turn.LanesOut[0].road == nextRoad) {
+				possibleTurn = turn;
+				break;
 			}
-			return routes;
 		}
-	}
-	
-	ExplicitTurn SelectBestExplicitTurn(PossibleTurn turn)
-	{
+		string s = "Potential turns: ";
+		s += "(" + possibleTurn.LaneIn + " -> [";
+		foreach(Lane lOut in possibleTurn.LanesOut) {
+			s += lOut + " ";
+		}
+		s += "])";
+		Debug.Log (s);
+
+		//Find explicit turn with highest value
 		ExplicitTurn argmax = default(ExplicitTurn);
 		float value_max = float.MinValue;
-		
-		for (int i = 0; i < turn.LanesOut.Length; i++)
-		{
-			float value = EvaluateLane(turn.LaneIn, turn.LanesOut[i]);
-			if (value > value_max)
-			{
-				argmax = new ExplicitTurn(turn, i);
+		for (int i = 0 ; i < possibleTurn.LanesOut.Length ; i++) {
+			Lane lane = possibleTurn.LanesOut[i];
+			float value = EvaluateLane(lane);
+			if(value > value_max) {
+				argmax = new ExplicitTurn(possibleTurn,i);
 				value_max = value;
 			}
 		}
-		return argmax;
+		Debug.Log ("Next turn = " + argmax);
+		nextTurn = argmax;
+	}
+	float EvaluateLane(Lane lane) {
+		float value = 0;
+
+		Road roadAfterNextTurn = route[route_index + 2];
+		if(roadAfterNextTurn != null) {
+			Road nextRoad = route[route_index + 1];
+			Intersection upcomingIntersection = car.currentLane.to as Intersection;
+			Intersection nextIntersection = nextRoad.OutLanes(upcomingIntersection)[0].to as Intersection;
+
+			//Find road
+			int idx = 0;
+			Road[] roads = nextIntersection.roads;
+			for (int i = 0 ; i < roads.Length ; i++) {
+				if(nextRoad == roads[i]) {
+					idx = i;
+					break;
+				}
+			}
+			int left_idx = (idx == 0) ? roads.Length - 1 : idx - 1;
+			int right_idx = (idx == roads.Length - 1) ? 0 : idx + 1;
+			if(roads[left_idx] == roadAfterNextTurn) {
+				value += (lane.annotation == LaneAnnotation.LEFT) ? 1000 : 0;
+			}
+			else if(roads[right_idx] == roadAfterNextTurn) {
+				value += (lane.annotation == LaneAnnotation.RIGHT) ? 1000 : 0;
+			}
+			else {
+				value += (lane.annotation == LaneAnnotation.CENTER) ? 1000 : 0;
+			}
+		}
+		float density = lane.CarsOnLane.Count / lane.length;
+		value -= 10 * density;
+		float proximity = Vector3.Distance(car.currentLane.endPoint, lane.startPoint);
+		value -= proximity;
+
+		return value;
 	}
 
 	public CarAI(Car car) {

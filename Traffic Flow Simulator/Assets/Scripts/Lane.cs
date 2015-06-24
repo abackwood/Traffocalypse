@@ -85,7 +85,9 @@ public class Lane : MonoBehaviour {
 	/// <param name="car">Car.</param>
 	public void Subscribe2Q(Car car)
 	{
-		carsAtIntersection.Add (car);
+		if(!carsAtIntersection.Contains(car)) {
+			carsAtIntersection.Add (car);
+		}
 	}
 
 	/// <summary>

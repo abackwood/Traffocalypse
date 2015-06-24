@@ -27,10 +27,7 @@ public class Car : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ai = new CarAI(this);
         ai.route_index = -1;
-
-        currentLane.Subscribe(this);
 
         if (Spawned != null)
         {
@@ -75,8 +72,8 @@ public class Car : MonoBehaviour
 
         if (intersection != null)
         {
-            float distanceToTurn = Vector3.Distance(transform.position, ai.NextTurn.TurnPoint);
-			ExplicitTurn nextTurn = ai.NextTurn;
+            float distanceToTurn = Vector3.Distance(transform.position, ai.nextTurn.TurnPoint);
+			ExplicitTurn nextTurn = ai.nextTurn;
 
             //If a turn point will be reached special actions need to be taken
             if (movement.magnitude > distanceToTurn)
@@ -90,6 +87,7 @@ public class Car : MonoBehaviour
                 SwitchToLane(newLane);
 
                 ai.route_index++;
+				ai.SelectNextTurn();
 
                 //Recalculate speed and movement
                 trueSpeed = movement.magnitude - distanceToTurn;	//Speed is now the rest after driving to the turn
