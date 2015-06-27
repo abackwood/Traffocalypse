@@ -22,6 +22,7 @@ public class CarAI {
     //Emotion
     public float anger_state;
     public float anger_decay;
+    public float honk_timer;
 
 	//Evaluation methods
 	public float EvaluateRoad(Road road) {
@@ -91,16 +92,29 @@ public class CarAI {
 				car.state = CarState.DRIVING;
 			}
 
-            float desired_speed = car.currentLane.speedLimit * desired_speed_mod;
             //Get mad when driving below desired speed, depending on the amount below speed
+            float desired_speed = car.currentLane.speedLimit * desired_speed_mod;
             if (car.speed < desired_speed /*&& car.state == CarState.DRIVING*/)
-                anger_state += 0.0001f * ((desired_speed - car.speed) / desired_speed) * anger_temper;
+                anger_state += 0.005f * ((desired_speed - car.speed) / desired_speed) * anger_temper * Time.deltaTime;
+            //Decaying of the anger depending on both the decay factor and temper factor
+            anger_state -= 0.005f * (anger_decay / anger_temper) * Time.deltaTime;
+            //Decaying of the decay of anger to imitate building irritability on longer drives
+            anger_decay -= 0.01f * Time.deltaTime;
 		}
 
-        //Decaying of the anger depending on both the decay factor and temper factor
-        anger_state -= 0.0001f * (anger_decay / anger_temper);
-        //Decaying of the decay of anger to imitate building irritability on longer drives
-        anger_decay -= 0.01f;
+        if (anger_state > 0.8f && car.nextCar != null)
+        {
+            if (honk_timer > 5.0f)
+            {
+                car.Honk();
+                car.nextCar.ai.ReceiveHonk();
+                honk_timer = 0;
+            }
+            else
+                honk_timer += Time.deltaTime;
+        }
+        else if (honk_timer != 0)
+            honk_timer = 0;
 	}
 
 	bool ReachedIntersection(Intersection intersection) {
@@ -150,6 +164,11 @@ public class CarAI {
 	void StartDriving() {
 		car.currentLane.UnsubscribeFromQ(car);
 	}
+
+    public void ReceiveHonk()
+    {
+        anger_state += 0.01f * anger_temper;
+    }
 
 	//Pathfinding
 

@@ -23,6 +23,9 @@ public class Car : MonoBehaviour
     public CarAI ai;
 
     SpriteRenderer renderer;
+    AudioSource audio;
+    bool isHonking = false;
+    float timeHonking = 0;
 
     // Use this for initialization
     void Start()
@@ -35,6 +38,7 @@ public class Car : MonoBehaviour
         }
 
         renderer = GetComponent<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -51,7 +55,13 @@ public class Car : MonoBehaviour
         Move();
 
         //Changes to color from red to green depending on the anger state
-        renderer.color = new Color(angerState, (1-angerState), 0);
+        if (!isHonking)
+            renderer.color = new Color(angerState, (1-angerState), 0);
+
+        if (timeHonking > 1.0f)
+            isHonking = false;
+
+        timeHonking += Time.deltaTime;
     }
 
     bool IsAtDestination()
@@ -121,6 +131,14 @@ public class Car : MonoBehaviour
         currentLane.Unsubcribe(this);
         currentLane.UnsubscribeFromQ(this);
         Destroy(gameObject);
+    }
+
+    public void Honk()
+    {
+        audio.Play();
+        renderer.color = new Color(255, 255, 0);
+        timeHonking = 0;
+        isHonking = true;
     }
 
     public float AngerState
