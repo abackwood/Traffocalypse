@@ -89,16 +89,19 @@ public class CarAI {
             //Get mad when driving below desired speed, depending on the amount below speed
             float desired_speed = car.currentLane.speedLimit * desired_speed_mod;
             if (car.speed < desired_speed /*&& car.state == CarState.DRIVING*/)
-                anger_state += 0.005f * ((desired_speed - car.speed) / desired_speed) * anger_temper * Time.deltaTime;
+                anger_state += 0.01f * ((desired_speed - car.speed) / desired_speed) * anger_temper * Time.deltaTime;
             //Decaying of the anger depending on both the decay factor and temper factor
-            anger_state -= 0.005f * (anger_decay / anger_temper) * Time.deltaTime;
+            anger_state -= 0.01f * (anger_decay / anger_temper) * Time.deltaTime;
             //Decaying of the decay of anger to imitate building irritability on longer drives
             anger_decay -= 0.01f * Time.deltaTime;
 		}
 
+        if (anger_state < 0)
+            anger_state = 0;
+
         if (anger_state > 0.8f && car.nextCar != null)
         {
-            if (honk_timer > 5.0f)
+            if (honk_timer > 3.0f)
             {
                 car.Honk();
                 car.nextCar.ai.ReceiveHonk();
