@@ -89,8 +89,17 @@ public class PossibleTurn {
 
 		laneTurnPoints = new Vector3[lanesOut.Length];
 		for(int i = 0 ; i < lanesOut.Length ; i++) {
-			Vector2 intersection = LaneIntersectionPoint(laneIn, lanesOut[i]);
-			laneTurnPoints[i] = new Vector3(intersection.x, intersection.y, 0);
+			Lane laneOut = lanesOut[i];
+			Vector2 intersection = LaneIntersectionPoint(laneIn, laneOut);
+			float in_diff = Vector2.Distance(laneIn.startPoint, intersection) - laneIn.length;
+			float out_diff = Vector2.Distance(laneOut.endPoint, intersection) - laneOut.length;
+			if(in_diff > 0 && out_diff > 0) {
+				laneTurnPoints[i] = new Vector3(intersection.x, intersection.y, 0);
+			}
+			else {
+				Vector2 meanPoint = (laneIn.endPoint + laneOut.startPoint) / 2;
+				laneTurnPoints[i] = new Vector3(meanPoint.x, meanPoint.y, 0);
+			}
 		}
 	}
 
@@ -109,11 +118,17 @@ public class PossibleTurn {
 		float A2 = out_end.y-out_start.y;
 		float B2 = out_start.x-out_end.x;
 		float C2 = A2*out_start.x+B2*out_start.y;
+
+		string s = inLane + " & " + outLane + ": ";
+		s += "(" + A1 + "x1 + " + B1 + "y1 = " + C1 + ")";
+		s += " intersects ";
+		s += "(" + A2 + "x2 + " + B2 + "y2 = " + C2 + ")";
+		Debug.Log (s);
 		
 		// Get delta and check if the lines are parallel
 		float delta = A1*B2 - A2*B1;
 		if(delta == 0) {
-			return (in_end - out_start) / 2;
+			return (in_end + out_start) / 2;
 		}
 		
 		// now return the Vector2 intersection point

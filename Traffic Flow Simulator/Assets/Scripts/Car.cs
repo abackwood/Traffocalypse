@@ -18,6 +18,7 @@ public class Car : MonoBehaviour
     public float angerState;
 
     public CarState state;
+	public Vector3 direction;
     public float speed;
 
     public CarAI ai;
@@ -76,9 +77,9 @@ public class Car : MonoBehaviour
     void Move()
     {
         float trueSpeed = speed * Time.deltaTime;
-        Vector3 movement = currentLane.direction * trueSpeed;
+        Vector3 movement = direction * trueSpeed;
 
-        Intersection intersection = currentLane.to as Intersection;
+        /*Intersection intersection = currentLane.to as Intersection;
 
         if (intersection != null)
         {
@@ -101,14 +102,14 @@ public class Car : MonoBehaviour
 
                 //Recalculate speed and movement
                 trueSpeed = movement.magnitude - distanceToTurn;	//Speed is now the rest after driving to the turn
-                movement = currentLane.direction * trueSpeed;	//Recalculate movement
+                movement = direction * trueSpeed;	//Recalculate movement
             }
-        }
+        }*/
 
         distanceOnLane += trueSpeed;
         transform.Translate(movement);
     }
-    void SwitchToLane(Lane lane)
+    public void SwitchToLane(Lane lane)
     {
         currentLane.Unsubcribe(this);
         currentLane = lane;
@@ -156,5 +157,6 @@ public enum CarState
 {
     DRIVING,
     QUEUED,
-    ON_INTERSECTION
+    HEADING_TO_TURN,
+	AWAY_FROM_TURN
 }

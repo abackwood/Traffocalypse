@@ -47,6 +47,7 @@ public class CarSpawner : MonoBehaviour {
 			car.currentLane.Subscribe(car);
 			car.distanceOnLane = 0;
 			car.transform.position = car.currentLane.startPoint;
+			car.direction = lane.direction;
 
 			car.ReachedDestination += OnCarReachedDestination;
 

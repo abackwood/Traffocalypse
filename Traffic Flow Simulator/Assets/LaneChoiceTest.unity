@@ -793,6 +793,10 @@ Prefab:
       propertyPath: m_Name
       value: Source 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11442860, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
+      propertyPath: source
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
   m_IsPrefabParent: 0
@@ -910,7 +914,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1105334982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -63.2999992, y: -73.6999969, z: 0}
+  m_LocalPosition: {x: -63.2999992, y: -70.6999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -928,7 +932,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 430144, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -143.399994
+      value: -70.6999969
       objectReference: {fileID: 0}
     - target: {fileID: 430144, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1051,7 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
-  carsToSpawn: 50
+  carsToSpawn: 5
   cooldown: 1
 --- !u!4 &1151425823
 Transform:
@@ -1118,7 +1122,7 @@ Prefab:
       objectReference: {fileID: 639060321}
     - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
       propertyPath: lanes
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
