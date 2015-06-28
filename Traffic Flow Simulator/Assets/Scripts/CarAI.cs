@@ -59,7 +59,9 @@ public class CarAI {
 			}
 		}
 
-		else if(car.state == CarState.DRIVING || car.state == CarState.ON_INTERSECTION) {
+		else if(car.state == CarState.DRIVING ||
+		        car.state == CarState.HEADING_TO_TURN ||
+		        car.state == CarState.AWAY_FROM_TURN) {
             //Speed changes depending on anger state from 0.75x to 1.5x the speedlimit
             car.speed = car.currentLane.speedLimit * (anger_state * 0.75f + 0.75f);
 
@@ -73,7 +75,7 @@ public class CarAI {
 			else if(car.state == CarState.DRIVING &&
 			        ReachedIntersection(intersection)) {
 				OnReachedIntersection(intersection);
-				if(intersection.IsOpen(nextTurn.Parent)) {
+				if(true || intersection.IsOpen(nextTurn.Parent)) {
 					OnLightGreen(intersection);
 				}
 				else {
@@ -81,16 +83,8 @@ public class CarAI {
 				}
 			}
 
-			if(car.state == CarState.DRIVING &&
-			   (car.distanceOnLane < 0 || car.distanceOnLane > car.currentLane.length - WAIT_MARGIN)) {
-				car.state = CarState.ON_INTERSECTION;
-			}
-
-			//Detect when no longer on intersection
-			if(car.state == CarState.ON_INTERSECTION &&
-			   car.distanceOnLane > 0 && car.distanceOnLane < car.currentLane.length - WAIT_MARGIN) {
-				car.state = CarState.DRIVING;
-			}
+			//Handle driving on intersection
+			HandleStateChangeOnIntersection();
 
             //Get mad when driving below desired speed, depending on the amount below speed
             float desired_speed = car.currentLane.speedLimit * desired_speed_mod;
@@ -157,6 +151,34 @@ public class CarAI {
 		}
 	}
 
+	void HandleStateChangeOnIntersection() {
+		float testRadius = Time.deltaTime * car.speed;
+		float distanceToEnd = Vector3.Distance(car.transform.position, nextTurn.LaneIn.endPoint);
+		float distanceToTurn = Vector3.Distance(car.transform.position, nextTurn.TurnPoint);
+		float distanceToStart = Vector3.Distance(car.transform.position, nextTurn.LaneOut.startPoint);
+
+		if((car.state == CarState.DRIVING && distanceToEnd < testRadius)) {
+			car.state = CarState.HEADING_TO_TURN;
+
+			car.direction = (nextTurn.TurnPoint - car.transform.position).normalized;
+		}
+		if(car.state == CarState.HEADING_TO_TURN && distanceToTurn < testRadius) {
+			car.state = CarState.AWAY_FROM_TURN;
+
+			car.distanceOnLane = -distanceToStart;
+			car.SwitchToLane(nextTurn.LaneOut);
+			car.direction = (nextTurn.LaneOut.startPoint - car.transform.position).normalized;
+		}
+		if(car.state == CarState.AWAY_FROM_TURN && distanceToStart < testRadius) {
+			car.state = CarState.DRIVING;
+
+			car.distanceOnLane = 0;
+			car.direction = nextTurn.LaneOut.direction;
+			route_index++;
+			SelectNextTurn();
+		}
+	}
+
 	void Queue() {
 		car.currentLane.Subscribe2Q(car);
 		car.state = CarState.QUEUED;
@@ -215,13 +237,6 @@ public class CarAI {
 				break;
 			}
 		}
-		string s = "Potential turns: ";
-		s += "(" + possibleTurn.LaneIn + " -> [";
-		foreach(Lane lOut in possibleTurn.LanesOut) {
-			s += lOut + " ";
-		}
-		s += "])";
-		Debug.Log (s);
 
 		//Find explicit turn with highest value
 		ExplicitTurn argmax = default(ExplicitTurn);
