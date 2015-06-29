@@ -7,6 +7,7 @@ public class TowTruck : MonoBehaviour
     public float towAwayTime = 5;
     public Text textObject;
     public Collision currentCollision;
+    public bool busy = false;
 
 	// Use this for initialization
 	void Start () 
@@ -28,6 +29,7 @@ public class TowTruck : MonoBehaviour
         currentCollision = collision;
         CancelInvoke("EndTowing");
         Invoke("EndTowing", towAwayTime);
+        busy = true;
     }
 
     public void EndTowing()
@@ -35,5 +37,6 @@ public class TowTruck : MonoBehaviour
         textObject.text = "Truck in use: no";
         currentCollision.Remove();
         currentCollision = null;
+        busy = false;
     }
 }
