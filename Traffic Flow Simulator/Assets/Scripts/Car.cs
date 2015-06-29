@@ -128,6 +128,8 @@ public class Car : MonoBehaviour
                 currentLane.ReplaceCar(this, collisionScript);
                 collisionScript.distanceOnLane = distanceOnLane;
                 collisionScript.currentLane = currentLane;
+
+				collisionScript.InitCollision();
             }
         currentLane.Unsubcribe(this);
         currentLane.UnsubscribeFromQ(this);

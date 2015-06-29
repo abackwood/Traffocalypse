@@ -13,6 +13,7 @@ public class Lane : MonoBehaviour {
 
 	public LaneAnnotation annotation;
 	public float speedLimit;
+	public bool blocked;
 
 	private List<Car> carsAtIntersection;
 	private LinkedList<Car> carsOnLane;

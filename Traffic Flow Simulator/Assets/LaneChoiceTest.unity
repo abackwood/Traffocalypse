@@ -793,10 +793,6 @@ Prefab:
       propertyPath: m_Name
       value: Source 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11442860, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
-      propertyPath: source
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 670be7f4541e12343bc648cb87e80075, type: 2}
   m_IsPrefabParent: 0
@@ -1057,6 +1053,7 @@ MonoBehaviour:
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
   carsToSpawn: 5
   cooldown: 1
+  cars: []
 --- !u!4 &1151425823
 Transform:
   m_ObjectHideFlags: 0
@@ -1151,6 +1148,7 @@ GameObject:
   - 92: {fileID: 1708253265}
   - 124: {fileID: 1708253264}
   - 81: {fileID: 1708253263}
+  - 114: {fileID: 1708253268}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1223,6 +1221,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 21
+--- !u!114 &1708253268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1708253262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9443cb3e8383ee54a965d637cae87395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  min: -50
+  max: 50
+  scrollSpeed: 10
+  moveDistance: 10
+  moveSpeed: 5
 --- !u!1 &1837420229
 GameObject:
   m_ObjectHideFlags: 0

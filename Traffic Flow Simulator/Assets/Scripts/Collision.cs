@@ -16,6 +16,17 @@ public class Collision : Car
             playerAIScript.AddCollision(this);
         }
 	}
+
+	public void InitCollision () {
+		currentLane.blocked = true;
+		currentLane.GetComponent<LineRenderer>().SetColors(Color.red, Color.red);
+		
+		GameObject spawner_obj = GameObject.Find ("Spawner");
+		CarSpawner spawner = spawner_obj.GetComponent<CarSpawner>();
+		foreach(Car c in spawner.cars) {
+			c.ai.route_index = -1;
+		}
+	}
 	
 	void Update () 
     {
@@ -33,7 +44,16 @@ public class Collision : Car
 
     public void Remove()
     {
+		currentLane.blocked = false;
+		currentLane.GetComponent<LineRenderer>().SetColors(Color.black, Color.black);
         currentLane.Unsubcribe(this);
+
+		GameObject spawner_obj = GameObject.Find ("Spawner");
+		CarSpawner spawner = spawner_obj.GetComponent<CarSpawner>();
+		foreach(Car c in spawner.cars) {
+			c.ai.route_index = -1;
+		}
+
         Destroy(gameObject);
     }
 }

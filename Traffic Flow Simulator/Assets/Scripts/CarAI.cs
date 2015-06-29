@@ -276,15 +276,20 @@ public class CarAI {
 			int left_idx = (idx == 0) ? roads.Length - 1 : idx - 1;
 			int right_idx = (idx == roads.Length - 1) ? 0 : idx + 1;
 			if(roads[left_idx] == roadAfterNextTurn) {
-				value += (lane.annotation == LaneAnnotation.LEFT) ? 1000 : 0;
+				value += (lane.annotation == LaneAnnotation.LEFT) ? 100 : 0;
 			}
 			else if(roads[right_idx] == roadAfterNextTurn) {
-				value += (lane.annotation == LaneAnnotation.RIGHT) ? 1000 : 0;
+				value += (lane.annotation == LaneAnnotation.RIGHT) ? 100 : 0;
 			}
 			else {
-				value += (lane.annotation == LaneAnnotation.CENTER) ? 1000 : 0;
+				value += (lane.annotation == LaneAnnotation.CENTER) ? 100 : 0;
 			}
 		}
+
+		if(lane.blocked) {
+			value -= 1000;
+		}
+
 		float density = lane.CarsOnLane.Count / lane.length;
 		value -= 10 * density;
 		float proximity = Vector3.Distance(car.currentLane.endPoint, lane.startPoint);

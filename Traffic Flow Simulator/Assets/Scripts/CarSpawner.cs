@@ -6,9 +6,9 @@ public class CarSpawner : MonoBehaviour {
 	public Car template;
 	public int carsToSpawn;
 	public float cooldown;
+	public List<Car> cars;
 
 	float timeSinceSpawn;
-	List<Car> cars;
 
 	// Use this for initialization
 	void Start () {

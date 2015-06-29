@@ -138,6 +138,8 @@ public class Road : MonoBehaviour {
 
 		lane.CalculateSpeedAndDirection(speedLimit);
 
+		lane.blocked = false;
+
 		lane.name = lane.ToString();
 
 		return lane;
