@@ -875,6 +875,7 @@ MonoBehaviour:
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
   carsToSpawn: 80
   cooldown: 1
+  cars: []
   carsSpawnedText: {fileID: 0}
   carsCompletedText: {fileID: 0}
   carsCrashedText: {fileID: 0}

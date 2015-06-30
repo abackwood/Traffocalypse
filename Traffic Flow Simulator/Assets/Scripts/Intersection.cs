@@ -123,7 +123,7 @@ public class PossibleTurn {
 		s += "(" + A1 + "x1 + " + B1 + "y1 = " + C1 + ")";
 		s += " intersects ";
 		s += "(" + A2 + "x2 + " + B2 + "y2 = " + C2 + ")";
-		Debug.Log (s);
+		//Debug.Log (s);
 		
 		// Get delta and check if the lines are parallel
 		float delta = A1*B2 - A2*B1;

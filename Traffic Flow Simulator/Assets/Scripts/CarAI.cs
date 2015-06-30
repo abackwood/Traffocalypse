@@ -35,7 +35,7 @@ public class CarAI {
 		{
 			RecomputeRoute();
 			route_index = 0;
-			Debug.Log ("Final Route: " + route);
+			//Debug.Log ("Final Route: " + route);
 			SelectNextTurn();
 		}
 
@@ -252,7 +252,7 @@ public class CarAI {
 				value_max = value;
 			}
 		}
-		Debug.Log ("Next turn = " + argmax);
+		//Debug.Log ("Next turn = " + argmax);
 		nextTurn = argmax;
 	}
 	float EvaluateLane(Lane lane) {

@@ -98,7 +98,7 @@ public class TrafficAgent : MonoBehaviour {
 			if (totalLength > 0) {
 				for(int i = 0; i < priorityList.Count; i++){
 					priorityList[i] = (float)currentQs[i]/totalLength;
-					Debug.Log("CurrentQ " + i.ToString() + ": " + currentQs[i].ToString());
+					//Debug.Log("CurrentQ " + i.ToString() + ": " + currentQs[i].ToString());
 					//Debug.Log (((float)currentQs[i]/totalLength).ToString ());
 				}
 			} else {
