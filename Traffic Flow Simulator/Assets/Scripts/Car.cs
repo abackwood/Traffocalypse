@@ -131,6 +131,9 @@ public class Car : MonoBehaviour
 
 				collisionScript.InitCollision();
             }
+        GameObject spawnerObject = GameObject.Find("Spawner");
+        CarSpawner carSpawner = spawnerObject.GetComponent<CarSpawner>();
+        carSpawner.carsCrashed++;
         currentLane.Unsubcribe(this);
         currentLane.UnsubscribeFromQ(this);
         Destroy(gameObject);
