@@ -138,6 +138,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 190470876}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -374,6 +382,10 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 826833079}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -490,6 +502,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 348685629}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -657,6 +677,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 928641082}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -1160,6 +1188,10 @@ Prefab:
     - target: {fileID: 121572, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
       propertyPath: m_Name
       value: Rd34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
@@ -2554,6 +2586,10 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 103678446}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -2823,6 +2859,7 @@ MonoBehaviour:
   towAwayTime: 5
   textObject: {fileID: 0}
   currentCollision: {fileID: 0}
+  busy: 0
 --- !u!114 &822612662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3047,6 +3084,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 1483159801}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -3625,6 +3670,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 899725459}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -3807,6 +3860,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 305048118}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -4055,6 +4116,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 718491492}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -4425,6 +4494,18 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 845522823}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: oneWay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -4735,6 +4816,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 1318407064}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -4855,6 +4944,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 830725360}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -5074,6 +5171,13 @@ MonoBehaviour:
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
   carsToSpawn: 80
   cooldown: 1
+  cars: []
+  carsSpawnedText: {fileID: 0}
+  carsCompletedText: {fileID: 0}
+  carsCrashedText: {fileID: 0}
+  carsSpawned: 0
+  carsCompleted: 0
+  carsCrashed: 0
 --- !u!4 &1411564577
 Transform:
   m_ObjectHideFlags: 0
@@ -5209,6 +5313,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 507580684}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -6029,6 +6141,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 2078438708}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -6757,6 +6877,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 305048118}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -6877,6 +7005,10 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 826833079}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -7196,6 +7328,10 @@ Prefab:
       propertyPath: m_Name
       value: Rd31
       objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -7256,6 +7392,18 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 625647675}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: oneWay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
@@ -7372,6 +7520,14 @@ Prefab:
       propertyPath: to
       value: 
       objectReference: {fileID: 2138961758}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: lanes
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453218, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
+      propertyPath: speedLimit
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a251cf5a9f22a874b8aedcc8dc8af5ee, type: 2}
   m_IsPrefabParent: 0
