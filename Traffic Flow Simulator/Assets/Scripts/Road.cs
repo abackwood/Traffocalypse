@@ -154,4 +154,20 @@ public class Road : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public override int GetHashCode ()
+	{
+		return 331*from.GetHashCode() + to.GetHashCode();
+	}
+
+	public override bool Equals (object o)
+	{
+		if(!o.GetType().Equals (typeof(Road))) {
+			return false;
+		}
+		else {
+			Road r = (Road)o;
+			return from.Equals (r.from) && to.Equals (r.to);
+		}
+	}
 }
