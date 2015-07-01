@@ -20,7 +20,7 @@ public class PlayerAI : MonoBehaviour
         if (!towTruckScript.busy)
             if(collisionList.Count > 0)
             {
-                Collision collision = FindFirst();
+                Collision collision = FindLast();
                 towTruckScript.StartTowing(collision);
             }
 	}

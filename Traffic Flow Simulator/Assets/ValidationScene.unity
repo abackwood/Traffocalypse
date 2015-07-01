@@ -114,7 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29eb9b746d3c56049b6282d05eefcb57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testTime: 30
+  testTime: 300
+  amountOfTests: 10
+  currentTests: 0
 --- !u!4 &614724421
 Transform:
   m_ObjectHideFlags: 0

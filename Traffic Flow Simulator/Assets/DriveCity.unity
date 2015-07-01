@@ -269,6 +269,46 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 50377103}
   m_Script: {fileID: 11500000, guid: d07968c3923a12b41a57e33e025975d0, type: 3}
+--- !u!1 &53186900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 53186902}
+  - 114: {fileID: 53186901}
+  m_Layer: 0
+  m_Name: PlayerAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &53186901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53186900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ab43cb668440a45aa4b32b40f606df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towTruck: {fileID: 822612660}
+--- !u!4 &53186902
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53186900}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.4627724, y: -17.8207932, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 139
 --- !u!1001 &56291518
 Prefab:
   m_ObjectHideFlags: 0
@@ -329,6 +369,72 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 56291518}
   m_Script: {fileID: 11500000, guid: d07968c3923a12b41a57e33e025975d0, type: 3}
+--- !u!1 &64747016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 64747017}
+  - 222: {fileID: 64747019}
+  - 114: {fileID: 64747018}
+  m_Layer: 5
+  m_Name: CarsCompletedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &64747017
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 64747016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1455035389}
+  m_RootOrder: 2
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -545, y: 280}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &64747018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 64747016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &64747019
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 64747016}
 --- !u!1001 &66721999
 Prefab:
   m_ObjectHideFlags: 0
@@ -584,8 +690,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roads:
   - {fileID: 638155143}
-  - {fileID: 1966150577}
   - {fileID: 469893830}
+  - {fileID: 1966150577}
   - {fileID: 735460519}
   agent: {fileID: 810833618}
 --- !u!4 &103678447
@@ -828,19 +934,19 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 4641199}
+      objectReference: {fileID: 1343923340}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 1630305492}
+      objectReference: {fileID: 898069184}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 898069184}
+      objectReference: {fileID: 4641199}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1343923340}
+      objectReference: {fileID: 1630305492}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -1154,11 +1260,11 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 811290455}
+      objectReference: {fileID: 1098011846}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[5]
       value: 
-      objectReference: {fileID: 1098011846}
+      objectReference: {fileID: 811290455}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -1412,23 +1518,23 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 91632734}
+      objectReference: {fileID: 1218886052}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 835067773}
+      objectReference: {fileID: 933761048}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 933761048}
+      objectReference: {fileID: 1367078057}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1218886052}
+      objectReference: {fileID: 835067773}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1367078057}
+      objectReference: {fileID: 91632734}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -1442,6 +1548,72 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 348685628}
   m_Script: {fileID: 11500000, guid: badeba0e31dee4943bb35af12892abdb, type: 3}
+--- !u!1 &368771015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 368771016}
+  - 222: {fileID: 368771018}
+  - 114: {fileID: 368771017}
+  m_Layer: 5
+  m_Name: CarsCrashedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &368771016
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 368771015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1455035389}
+  m_RootOrder: 3
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -545, y: 260}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &368771017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 368771015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &368771018
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 368771015}
 --- !u!1001 &382598351
 Prefab:
   m_ObjectHideFlags: 0
@@ -2057,6 +2229,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!4 &523311278
 Transform:
   m_ObjectHideFlags: 0
@@ -2419,23 +2592,23 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 1990582850}
+      objectReference: {fileID: 1520929757}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 735460519}
+      objectReference: {fileID: 1409872235}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1409872235}
+      objectReference: {fileID: 735460519}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1254401648}
+      objectReference: {fileID: 1990582850}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1520929757}
+      objectReference: {fileID: 1254401648}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -2913,6 +3086,72 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 718491491}
   m_Script: {fileID: 11500000, guid: badeba0e31dee4943bb35af12892abdb, type: 3}
+--- !u!1 &728387124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 728387127}
+  - 222: {fileID: 728387126}
+  - 114: {fileID: 728387125}
+  m_Layer: 5
+  m_Name: CarsSpawnedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &728387125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728387124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &728387126
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728387124}
+--- !u!224 &728387127
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728387124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1455035389}
+  m_RootOrder: 1
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -545, y: 300}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
 --- !u!1001 &735460518
 Prefab:
   m_ObjectHideFlags: 0
@@ -3002,10 +3241,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roads:
   - {fileID: 1126948651}
-  - {fileID: 784798333}
-  - {fileID: 1231065080}
   - {fileID: 501536866}
   - {fileID: 1579670314}
+  - {fileID: 784798333}
+  - {fileID: 1231065080}
   agent: {fileID: 1867200237}
 --- !u!4 &738664597
 Transform:
@@ -3286,7 +3525,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -545, y: 318}
+  m_AnchoredPosition: {x: -545, y: 320}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &826833078
@@ -3318,8 +3557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roads:
   - {fileID: 1966150577}
-  - {fileID: 1126948651}
   - {fileID: 1809856342}
+  - {fileID: 1126948651}
   - {fileID: 476111981}
   - {fileID: 66722000}
   agent: {fileID: 1952167421}
@@ -3385,19 +3624,19 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 1367078057}
+      objectReference: {fileID: 1400578876}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 1400578876}
+      objectReference: {fileID: 1542287978}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1542287978}
+      objectReference: {fileID: 1161886118}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1161886118}
+      objectReference: {fileID: 1367078057}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -3577,19 +3816,19 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 469893830}
+      objectReference: {fileID: 835067773}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 835067773}
+      objectReference: {fileID: 1491674013}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1491674013}
+      objectReference: {fileID: 1308363787}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1308363787}
+      objectReference: {fileID: 469893830}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -3787,11 +4026,11 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1491674013}
+      objectReference: {fileID: 1800485654}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1800485654}
+      objectReference: {fileID: 1491674013}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -3985,23 +4224,23 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 161786473}
+      objectReference: {fileID: 1115852622}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 50377104}
+      objectReference: {fileID: 1437515334}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 770981425}
+      objectReference: {fileID: 161786473}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1115852622}
+      objectReference: {fileID: 50377104}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1437515334}
+      objectReference: {fileID: 770981425}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -5191,27 +5430,27 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 1254401648}
+      objectReference: {fileID: 161786473}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 1343923340}
+      objectReference: {fileID: 1493282052}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1318746590}
+      objectReference: {fileID: 1254401648}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1546011994}
+      objectReference: {fileID: 1343923340}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 161786473}
+      objectReference: {fileID: 1318746590}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[5]
       value: 
-      objectReference: {fileID: 1493282052}
+      objectReference: {fileID: 1546011994}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -5883,8 +6122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template: {fileID: 11460940, guid: 8f62670201b7cae48a4997c2deaab527, type: 2}
-  carsToSpawn: 80
-  cooldown: 1
+  carsToSpawn: 10000
+  cooldown: .100000001
   cars: []
   carsSpawnedText: {fileID: 0}
   carsCompletedText: {fileID: 0}
@@ -5954,7 +6193,7 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 898069184}
+      objectReference: {fileID: 1990582850}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
@@ -5966,7 +6205,7 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 1990582850}
+      objectReference: {fileID: 898069184}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -6069,6 +6308,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 822612664}
+  - {fileID: 728387127}
+  - {fileID: 64747017}
+  - {fileID: 368771016}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -6184,19 +6426,19 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 4641199}
+      objectReference: {fileID: 1746065395}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1941898500}
+      objectReference: {fileID: 345690492}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
-      objectReference: {fileID: 345690492}
+      objectReference: {fileID: 1941898500}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1746065395}
+      objectReference: {fileID: 4641199}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -6920,15 +7162,15 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[0]
       value: 
-      objectReference: {fileID: 811290455}
+      objectReference: {fileID: 1308363787}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[1]
       value: 
-      objectReference: {fileID: 1308363787}
+      objectReference: {fileID: 811290455}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[2]
       value: 
-      objectReference: {fileID: 1809856342}
+      objectReference: {fileID: 1809225457}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[3]
       value: 
@@ -6936,7 +7178,7 @@ Prefab:
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: roads.Array.data[4]
       value: 
-      objectReference: {fileID: 1809225457}
+      objectReference: {fileID: 1809856342}
     - target: {fileID: 11463648, guid: 108a6922d57b2ce43871f9e46d3bc42b, type: 2}
       propertyPath: agent
       value: 
@@ -8012,6 +8254,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &1887399753
 MonoBehaviour:
@@ -8681,12 +8924,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roads:
-  - {fileID: 638155143}
-  - {fileID: 572581973}
   - {fileID: 1513801223}
   - {fileID: 91632734}
+  - {fileID: 638155143}
   - {fileID: 1409872235}
   - {fileID: 2074121821}
+  - {fileID: 572581973}
   agent: {fileID: 316207545}
 --- !u!4 &2138961759
 Transform:

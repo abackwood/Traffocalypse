@@ -4,7 +4,9 @@ using System.IO;
 
 public class Test : MonoBehaviour 
 {
-    public int testTime = 30;
+    public int testTime = 300;
+    public int amountOfTests = 10;
+    public int currentTests = 0;
 
     private StreamWriter writer;
     private CarSpawner carSpawner;
@@ -24,7 +26,7 @@ public class Test : MonoBehaviour
 
     void LoadScene()
     {
-        Application.LoadLevel("MainScene");
+        Application.LoadLevel("DriveCity");
         Invoke("OutputTestResults", testTime);
         Debug.Log("Invoked in " + testTime + "  seconds");
     }
@@ -35,6 +37,8 @@ public class Test : MonoBehaviour
         carSpawner = spawnerObject.GetComponent<CarSpawner>();
         writer.WriteLine(carSpawner.carsSpawned + "," + carSpawner.carsCompleted + "," + carSpawner.carsCrashed);
         Debug.Log("write text");
-        LoadScene();
+        currentTests++;
+        if(currentTests < amountOfTests)
+            LoadScene();
     }
 }
