@@ -150,7 +150,7 @@ public class TrafficAgentGeneral : MonoBehaviour {
 		foreach(Turn t in phase) {
 			s += t + ",";
 		}
-		Debug.Log (s);
+		//Debug.Log (s);
 
 		return phase;
 	}
