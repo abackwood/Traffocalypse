@@ -1,0 +1,29 @@
+Initialize engine version: 5.0.1f1 (5a2e8fe35a68)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 820M          (ID=0x1140)
+    Vendor:   NVIDIA
+    VRAM:     971 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.065 seconds
+desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Rogier\Documents\GitHub Repositories\Traffocalypse\Runnable\Traffocalypse_Data\Managed\System.dll (this message is harmless)
+NullReferenceException: Object reference not set to an instance of an object
+  at CarAI.SelectNextTurn () [0x00000] in <filename unknown>:0 
+  at CarAI.HandleStateChangeOnIntersection () [0x00000] in <filename unknown>:0 
+  at CarAI.Update () [0x00000] in <filename unknown>:0 
+  at Car.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
