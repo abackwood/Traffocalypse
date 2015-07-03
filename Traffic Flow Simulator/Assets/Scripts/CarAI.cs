@@ -75,7 +75,7 @@ public class CarAI {
 			else if(car.state == CarState.DRIVING &&
 			        ReachedIntersection(intersection)) {
 				OnReachedIntersection(intersection);
-				if(true || intersection.IsOpen(nextTurn.Parent)) {
+				if(intersection.IsOpen(nextTurn.Parent)) {
 					OnLightGreen(intersection);
 				}
 				else {
@@ -191,6 +191,7 @@ public class CarAI {
 	}
 	void StartDriving() {
 		car.currentLane.UnsubscribeFromQ(car);
+		car.state = CarState.DRIVING;
 	}
 
     public void ReceiveHonk()
@@ -233,6 +234,10 @@ public class CarAI {
 	{
 		Intersection intersection = car.currentLane.to as Intersection;
 		Road nextRoad = route[route_index + 1];
+
+		if(intersection == null) {
+			return;
+		}
 
 		//Find appropriate possible turn
 		PossibleTurn possibleTurn = default(PossibleTurn);

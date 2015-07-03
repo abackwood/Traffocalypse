@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Intersection : Connection {
 	public Road[] roads;
-	public TrafficAgent agent;
+	public TrafficAgentGeneral agent;
 
 	public PossibleTurn[] PossibleTurns { get; private set; }
 	public List<PossibleTurn> OpenTurns { private get; set; }
@@ -59,11 +59,28 @@ public class Intersection : Connection {
 	}
 
 	public bool IsOpen(PossibleTurn turn) {
-		return OpenTurns.Contains (turn);
+		//return OpenTurns.Contains (turn);
+		return agent.IsOpen(turn);
 	}
 
 	public void SetOpen(List<PossibleTurn> turns){
 		OpenTurns = turns;
+	}
+
+	public override int GetHashCode ()
+	{
+		return transform.position.GetHashCode();
+	}
+
+	public override bool Equals (object o)
+	{
+		if(!o.GetType().Equals (typeof(Intersection))) {
+			return false;
+		}
+		else {
+			Intersection i = (Intersection)o;
+			return transform.position.Equals (i.transform.position);
+		}
 	}
 }
 
