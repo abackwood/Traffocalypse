@@ -117,6 +117,8 @@ MonoBehaviour:
   testTime: 300
   amountOfTests: 10
   currentTests: 0
+  playerAI: {fileID: 0}
+  testMode: 0
 --- !u!4 &614724421
 Transform:
   m_ObjectHideFlags: 0

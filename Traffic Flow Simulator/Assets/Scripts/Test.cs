@@ -7,6 +7,8 @@ public class Test : MonoBehaviour
     public int testTime = 300;
     public int amountOfTests = 10;
     public int currentTests = 0;
+    public PlayerAI playerAI;
+    public int testMode = 1;
 
     private StreamWriter writer;
     private CarSpawner carSpawner;
@@ -38,7 +40,18 @@ public class Test : MonoBehaviour
         writer.WriteLine(carSpawner.carsSpawned + "," + carSpawner.carsCompleted + "," + carSpawner.carsCrashed);
         Debug.Log("write text");
         currentTests++;
-        if(currentTests < amountOfTests)
+        if (currentTests < amountOfTests)
             LoadScene();
+        else
+        {
+            GameObject obj = GameObject.Find("PlayerAI");
+            playerAI = obj.GetComponent<PlayerAI>();
+            if (playerAI.testMode < 4)
+            {
+                testMode++;
+                currentTests = 0;
+                LoadScene();
+            }
+        }
     }
 }
