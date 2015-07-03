@@ -99,9 +99,6 @@ public class CarAI {
         if (anger_state < 0)
             anger_state = 0;
 
-        if (anger_state > 1.0f)
-            anger_state = 1.0f;
-
         if (anger_state > 0.8f && car.nextCar != null)
         {
             if (honk_timer > 3.0f)
